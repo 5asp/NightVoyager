@@ -1,0 +1,22 @@
+syntax = "v1"
+
+type (
+    // 定义登录接口的 json 请求体
+    SendReq {
+        AppID int `json:"appid"`
+        AppKey string `json:"appkey"`
+
+    }
+    // 定义登录接口的 json 响应体
+    SendResp {
+        Id       int64  `json:"id"`
+        Name     string `json:"name"`
+        Token    string `json:"token"`
+        ExpireAt string `json:"expireAt"`
+    }
+)
+
+service send-api {
+	@handler SendHandler
+ 	post /send (SendReq) returns (SendResp)
+ }
