@@ -1,8 +1,9 @@
 Name: appsvc.rpc
 ListenOn: 0.0.0.0:8080
+Mode: dev
 Etcd:
   Hosts:
   - 127.0.0.1:2379
   Key: appsvc.rpc
-PostgreSQL:
+Postgres:
   DataSource: postgresql://aheadIV:oXnwUedJ47RI@ep-summer-tree-57217189-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require

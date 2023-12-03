@@ -6,21 +6,21 @@ package appsvcclient
 import (
 	"context"
 
-	"github.com/aheadIV/NightVoyager/appsvc/appsvc"
+	"github.com/aheadIV/NightVoyager/appsvc/types/appsvc"
 
 	"github.com/zeromicro/go-zero/zrpc"
 	"google.golang.org/grpc"
 )
 
 type (
-	GetAppReq  = appsvc.GetAppReq
-	GetAppResp = appsvc.GetAppResp
-	Request    = appsvc.Request
-	Response   = appsvc.Response
+	CreateAppReq  = appsvc.CreateAppReq
+	CreateAppResp = appsvc.CreateAppResp
+	GetAppReq     = appsvc.GetAppReq
+	GetAppResp    = appsvc.GetAppResp
 
 	Appsvc interface {
-		Ping(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
 		GetApp(ctx context.Context, in *GetAppReq, opts ...grpc.CallOption) (*GetAppResp, error)
+		CreateApp(ctx context.Context, in *CreateAppReq, opts ...grpc.CallOption) (*CreateAppResp, error)
 	}
 
 	defaultAppsvc struct {
@@ -34,12 +34,12 @@ func NewAppsvc(cli zrpc.Client) Appsvc {
 	}
 }
 
-func (m *defaultAppsvc) Ping(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
-	client := appsvc.NewAppsvcClient(m.cli.Conn())
-	return client.Ping(ctx, in, opts...)
-}
-
 func (m *defaultAppsvc) GetApp(ctx context.Context, in *GetAppReq, opts ...grpc.CallOption) (*GetAppResp, error) {
 	client := appsvc.NewAppsvcClient(m.cli.Conn())
 	return client.GetApp(ctx, in, opts...)
+}
+
+func (m *defaultAppsvc) CreateApp(ctx context.Context, in *CreateAppReq, opts ...grpc.CallOption) (*CreateAppResp, error) {
+	client := appsvc.NewAppsvcClient(m.cli.Conn())
+	return client.CreateApp(ctx, in, opts...)
 }

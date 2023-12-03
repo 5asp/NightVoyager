@@ -1,22 +1,32 @@
 syntax = "v1"
 
-type (
-    // 定义登录接口的 json 请求体
-    SendReq {
-        AppID int `json:"appid"`
-        AppKey string `json:"appkey"`
-
-    }
-    // 定义登录接口的 json 响应体
-    SendResp {
-        Id       int64  `json:"id"`
-        Name     string `json:"name"`
-        Token    string `json:"token"`
-        ExpireAt string `json:"expireAt"`
-    }
+info(
+	title: "SendSMS"
+	desc: "send service"
+	author: "xiaxuejin"
+	email: "ahead4@duck.com"
+	version: "1.0"
 )
 
+type (
+	// 定义登录接口的 json 请求体
+	SendReq {
+		AppID   int    `json:"appid"`
+		Secret  string `json:"secret"`
+		To      string `json:"to"`
+		Content string `json:"content"`
+	}
+	// 定义登录接口的 json 响应体
+	SendResp {
+		Credit int `json:"credit"`
+		Faild int `json:"faild"`
+		Successd int `json:"successd"`
+	}
+)
+@server (
+	maxBytes: 1048576
+)
 service send-api {
-	@handler SendHandler
- 	post /send (SendReq) returns (SendResp)
- }
+	@handler SendSMS
+	post /send (SendReq) returns (SendResp)
+}

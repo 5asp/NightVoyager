@@ -6,9 +6,9 @@ package server
 import (
 	"context"
 
-	"github.com/aheadIV/NightVoyager/appsvc/appsvc"
 	"github.com/aheadIV/NightVoyager/appsvc/internal/logic"
 	"github.com/aheadIV/NightVoyager/appsvc/internal/svc"
+	"github.com/aheadIV/NightVoyager/appsvc/types/appsvc"
 )
 
 type AppsvcServer struct {
@@ -22,12 +22,12 @@ func NewAppsvcServer(svcCtx *svc.ServiceContext) *AppsvcServer {
 	}
 }
 
-func (s *AppsvcServer) Ping(ctx context.Context, in *appsvc.Request) (*appsvc.Response, error) {
-	l := logic.NewPingLogic(ctx, s.svcCtx)
-	return l.Ping(in)
-}
-
 func (s *AppsvcServer) GetApp(ctx context.Context, in *appsvc.GetAppReq) (*appsvc.GetAppResp, error) {
 	l := logic.NewGetAppLogic(ctx, s.svcCtx)
 	return l.GetApp(in)
+}
+
+func (s *AppsvcServer) CreateApp(ctx context.Context, in *appsvc.CreateAppReq) (*appsvc.CreateAppResp, error) {
+	l := logic.NewCreateAppLogic(ctx, s.svcCtx)
+	return l.CreateApp(in)
 }

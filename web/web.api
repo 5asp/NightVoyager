@@ -1,0 +1,26 @@
+syntax = "v1"
+
+info (
+	title:   "web manage"
+	desc:    "user dashboard"
+	author:  "xiaxuejin"
+	version: "v1"
+)
+
+type (
+	// 定义登录接口的 json 请求体
+	CreateAppReq {
+	}
+	// 定义登录接口的 json 响应体
+	CreateAppResp {
+		ID int64 `json:"id"`
+	}
+)
+@server (
+	maxBytes:   1048576
+)
+
+service web-api {
+	@handler CreateApp
+	post /app/create (CreateAppReq) returns (CreateAppResp)
+}

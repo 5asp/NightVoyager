@@ -3,22 +3,22 @@ package handler
 import (
 	"net/http"
 
-	"github.com/aheadIV/NightVoyager/send/internal/logic"
-	"github.com/aheadIV/NightVoyager/send/internal/svc"
-	"github.com/aheadIV/NightVoyager/send/internal/types"
+	"github.com/aheadIV/NightVoyager/web/internal/logic"
+	"github.com/aheadIV/NightVoyager/web/internal/svc"
+	"github.com/aheadIV/NightVoyager/web/internal/types"
 	"github.com/zeromicro/go-zero/rest/httpx"
 )
 
-func SendHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
+func CreateAppHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		var req types.Request
+		var req types.CreateAppReq
 		if err := httpx.Parse(r, &req); err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 			return
 		}
 
-		l := logic.NewSendLogic(r.Context(), svcCtx)
-		resp, err := l.Send(&req)
+		l := logic.NewCreateAppLogic(r.Context(), svcCtx)
+		resp, err := l.CreateApp(&req)
 		if err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 		} else {

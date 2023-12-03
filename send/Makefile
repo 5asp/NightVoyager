@@ -1,6 +1,6 @@
 .PHONY: gen 
 gen:
-	@goctl rpc protoc appsvc.proto --go_out=./ --go-grpc_out=./ --zrpc_out=.
+	@goctl api go --api send.api --dir .
 .PHONY: run 
 run:
 	@go run send.go -f etc/send.yaml

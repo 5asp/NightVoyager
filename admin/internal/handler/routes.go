@@ -4,7 +4,7 @@ package handler
 import (
 	"net/http"
 
-	"github.com/aheadIV/NightVoyager/send/internal/svc"
+	"github.com/aheadIV/NightVoyager/admin/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
 )
@@ -13,11 +13,10 @@ func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
 		[]rest.Route{
 			{
-				Method:  http.MethodPost,
-				Path:    "/send",
-				Handler: SendSMSHandler(serverCtx),
+				Method:  http.MethodGet,
+				Path:    "/from/:name",
+				Handler: AdminHandler(serverCtx),
 			},
 		},
-		rest.WithMaxBytes(1048576),
 	)
 }

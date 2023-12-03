@@ -22,8 +22,8 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AppsvcClient interface {
-	Ping(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
 	GetApp(ctx context.Context, in *GetAppReq, opts ...grpc.CallOption) (*GetAppResp, error)
+	CreateApp(ctx context.Context, in *CreateAppReq, opts ...grpc.CallOption) (*CreateAppResp, error)
 }
 
 type appsvcClient struct {
@@ -32,15 +32,6 @@ type appsvcClient struct {
 
 func NewAppsvcClient(cc grpc.ClientConnInterface) AppsvcClient {
 	return &appsvcClient{cc}
-}
-
-func (c *appsvcClient) Ping(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
-	out := new(Response)
-	err := c.cc.Invoke(ctx, "/appsvc.Appsvc/Ping", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
 }
 
 func (c *appsvcClient) GetApp(ctx context.Context, in *GetAppReq, opts ...grpc.CallOption) (*GetAppResp, error) {
@@ -52,12 +43,21 @@ func (c *appsvcClient) GetApp(ctx context.Context, in *GetAppReq, opts ...grpc.C
 	return out, nil
 }
 
+func (c *appsvcClient) CreateApp(ctx context.Context, in *CreateAppReq, opts ...grpc.CallOption) (*CreateAppResp, error) {
+	out := new(CreateAppResp)
+	err := c.cc.Invoke(ctx, "/appsvc.Appsvc/CreateApp", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AppsvcServer is the server API for Appsvc service.
 // All implementations must embed UnimplementedAppsvcServer
 // for forward compatibility
 type AppsvcServer interface {
-	Ping(context.Context, *Request) (*Response, error)
 	GetApp(context.Context, *GetAppReq) (*GetAppResp, error)
+	CreateApp(context.Context, *CreateAppReq) (*CreateAppResp, error)
 	mustEmbedUnimplementedAppsvcServer()
 }
 
@@ -65,11 +65,11 @@ type AppsvcServer interface {
 type UnimplementedAppsvcServer struct {
 }
 
-func (UnimplementedAppsvcServer) Ping(context.Context, *Request) (*Response, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Ping not implemented")
-}
 func (UnimplementedAppsvcServer) GetApp(context.Context, *GetAppReq) (*GetAppResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetApp not implemented")
+}
+func (UnimplementedAppsvcServer) CreateApp(context.Context, *CreateAppReq) (*CreateAppResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateApp not implemented")
 }
 func (UnimplementedAppsvcServer) mustEmbedUnimplementedAppsvcServer() {}
 
@@ -82,24 +82,6 @@ type UnsafeAppsvcServer interface {
 
 func RegisterAppsvcServer(s grpc.ServiceRegistrar, srv AppsvcServer) {
 	s.RegisterService(&Appsvc_ServiceDesc, srv)
-}
-
-func _Appsvc_Ping_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Request)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(AppsvcServer).Ping(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/appsvc.Appsvc/Ping",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AppsvcServer).Ping(ctx, req.(*Request))
-	}
-	return interceptor(ctx, in, info, handler)
 }
 
 func _Appsvc_GetApp_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -120,6 +102,24 @@ func _Appsvc_GetApp_Handler(srv interface{}, ctx context.Context, dec func(inter
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Appsvc_CreateApp_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateAppReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AppsvcServer).CreateApp(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/appsvc.Appsvc/CreateApp",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AppsvcServer).CreateApp(ctx, req.(*CreateAppReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Appsvc_ServiceDesc is the grpc.ServiceDesc for Appsvc service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -128,12 +128,12 @@ var Appsvc_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*AppsvcServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Ping",
-			Handler:    _Appsvc_Ping_Handler,
-		},
-		{
 			MethodName: "GetApp",
 			Handler:    _Appsvc_GetApp_Handler,
+		},
+		{
+			MethodName: "CreateApp",
+			Handler:    _Appsvc_CreateApp_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

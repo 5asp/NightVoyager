@@ -4,10 +4,10 @@ import (
 	"flag"
 	"fmt"
 
-	"github.com/aheadIV/NightVoyager/appsvc/appsvc"
 	"github.com/aheadIV/NightVoyager/appsvc/internal/config"
 	"github.com/aheadIV/NightVoyager/appsvc/internal/server"
 	"github.com/aheadIV/NightVoyager/appsvc/internal/svc"
+	"github.com/aheadIV/NightVoyager/appsvc/types/appsvc"
 
 	"github.com/zeromicro/go-zero/core/conf"
 	"github.com/zeromicro/go-zero/core/service"
