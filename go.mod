@@ -5,6 +5,8 @@ go 1.20
 require (
 	github.com/go-rel/postgres v0.11.0
 	github.com/go-rel/rel v0.41.0
+	github.com/gobwas/ws v1.3.1
+	github.com/gorilla/websocket v1.5.1
 	github.com/lib/pq v1.10.9
 	github.com/nats-io/nats.go v1.31.0
 	github.com/zeromicro/go-zero v1.6.0
@@ -29,6 +31,8 @@ require (
 	github.com/go-openapi/swag v0.22.4 // indirect
 	github.com/go-redis/redis/v8 v8.11.5 // indirect
 	github.com/go-rel/sql v0.16.0 // indirect
+	github.com/gobwas/httphead v0.1.0 // indirect
+	github.com/gobwas/pool v0.2.1 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
 	github.com/golang-jwt/jwt/v4 v4.5.0 // indirect
 	github.com/golang/mock v1.6.0 // indirect
