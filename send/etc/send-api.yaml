@@ -1,8 +1,9 @@
 Name: send-api
 Host: 0.0.0.0
-Port: 8888
-AppRpc:       // rpc服务名称
+Port: 8870
+
+AppRpc:
   Etcd:
     Hosts:
-      - 127.0.0.1:2379      //Etcd的ip和端口
-    Key: appsvc.rpc          //rpc服务注册的key
+    - 127.0.0.1:2379
+    Key: appsvc.rpc

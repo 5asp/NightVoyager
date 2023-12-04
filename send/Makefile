@@ -3,4 +3,4 @@ gen:
 	@goctl api go --api send.api --dir .
 .PHONY: run 
 run:
-	@go run send.go -f etc/send.yaml
+	@go run send.go -f etc/send-api.yaml

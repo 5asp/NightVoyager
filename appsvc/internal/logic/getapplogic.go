@@ -2,6 +2,8 @@ package logic
 
 import (
 	"context"
+	"errors"
+	"fmt"
 
 	"github.com/aheadIV/NightVoyager/appsvc/internal/svc"
 	"github.com/aheadIV/NightVoyager/appsvc/model"
@@ -28,18 +30,22 @@ func NewGetAppLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetAppLogi
 
 func (l *GetAppLogic) GetApp(in *appsvc.GetAppReq) (*appsvc.GetAppResp, error) {
 	// todo: add your logic here and delete this line
+	fmt.Println(in.AppId)
+
 	if in.AppId != 0 {
 		var appData model.AppInfo
-		err := l.svcCtx.DB.Find(l.ctx, &appData, where.Eq("id", in.AppId))
-		switch err {
-		case rel.ErrNotFound:
+
+		if err := l.svcCtx.DB.Find(l.ctx, &appData, where.Eq("id", in.AppId)); err != nil {
+			if !errors.Is(err, rel.ErrNotFound) {
+				// unexpected error.
+				return nil, err
+
+			}
 			return &appsvc.GetAppResp{}, nil
-		case nil:
+		} else {
 			return &appsvc.GetAppResp{
 				AppId: int64(appData.ID), Secret: appData.Secret, Remark: appData.Remark, CreatedAt: appData.CreatedAt.Unix(), UpdatedAt: appData.UpdatedAt.Unix(), Status: int32(appData.Status),
 			}, nil
-		default:
-			return nil, err
 		}
 	}
 	return &appsvc.GetAppResp{}, nil

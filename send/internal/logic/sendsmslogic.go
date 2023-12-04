@@ -2,13 +2,26 @@ package logic
 
 import (
 	"context"
+	"encoding/json"
+	"fmt"
+	"log"
+	"time"
 
 	"github.com/aheadIV/NightVoyager/appsvc/types/appsvc"
 	"github.com/aheadIV/NightVoyager/send/internal/svc"
 	"github.com/aheadIV/NightVoyager/send/internal/types"
+	"github.com/aheadIV/NightVoyager/send/model"
 	"github.com/nats-io/nats.go/jetstream"
 
 	"github.com/zeromicro/go-zero/core/logx"
+)
+
+const (
+	StreamName     = "REVIEWS"
+	StreamSubjects = "REVIEWS.*"
+
+	SubjectNameReviewCreated  = "REVIEWS.rateGiven"
+	SubjectNameReviewAnswered = "REVIEWS.rateAnswer"
 )
 
 type SendSMSLogic struct {
@@ -34,16 +47,32 @@ func (l *SendSMSLogic) SendSMS(req *types.SendReq) (resp *types.SendResp, err er
 		}
 
 	}
-	CreateJetStream(l.ctx, l.svcCtx.JsStream, "ok", "sms.*")
+	fmt.Println(111122222)
+	_, err = l.svcCtx.JsStream.CreateStream(l.ctx, jetstream.StreamConfig{
+		Name:     StreamName,
+		Subjects: []string{StreamSubjects},
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	data := &model.Review{
+		To:      req.To,
+		Content: req.Content,
+		SendAt:  time.Now(),
+	}
+	fmt.Println("xxxxxxxxxxxx")
+	reviewString, _ := json.Marshal(data)
+	_, err = l.svcCtx.JsStream.Publish(l.ctx, SubjectNameReviewCreated, reviewString)
+	if err != nil {
+		log.Println(err)
+	} else {
+		log.Printf("Publisher  =>  Message:%s\n", data.Content)
+	}
+
 	return
 }
 
 // golang nats jetstream produce
 // https://medium.com/vlmedia-tech/distributed-message-streaming-in-golang-using-nats-jetstream-29f28be66dc6
-func CreateJetStream(ctx context.Context, js jetstream.JetStream, streamName, subjectName string) {
-	stream, _ := js.CreateStream(ctx, jetstream.StreamConfig{
-		Name:     streamName,
-		Subjects: []string{subjectName},
-	})
-
-}
