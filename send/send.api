@@ -18,8 +18,8 @@ type (
 	}
 	// 定义登录接口的 json 响应体
 	SendResp {
-		Credit int `json:"credit"`
-		Faild int `json:"faild"`
+		Credit   int `json:"credit"`
+		Faild    int `json:"faild"`
 		Successd int `json:"successd"`
 	}
 )

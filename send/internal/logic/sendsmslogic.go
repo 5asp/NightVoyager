@@ -47,7 +47,6 @@ func (l *SendSMSLogic) SendSMS(req *types.SendReq) (resp *types.SendResp, err er
 		}
 
 	}
-	fmt.Println(111122222)
 	_, err = l.svcCtx.JsStream.CreateStream(l.ctx, jetstream.StreamConfig{
 		Name:     StreamName,
 		Subjects: []string{StreamSubjects},

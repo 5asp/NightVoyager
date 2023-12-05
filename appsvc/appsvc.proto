@@ -21,6 +21,7 @@ message CreateAppReq {
 }
 message CreateAppResp {
   int64 id  = 1;
+  string secret = 2;
 }
 
 service Appsvc {

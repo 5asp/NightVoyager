@@ -5,5 +5,6 @@ type CreateAppReq struct {
 }
 
 type CreateAppResp struct {
-	ID int64 `json:"id"`
+	AppID  int64  `json:"appid"`
+	Secret string `json:"secret"`
 }

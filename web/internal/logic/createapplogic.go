@@ -32,6 +32,7 @@ func (l *CreateAppLogic) CreateApp(req *types.CreateAppReq) (resp *types.CreateA
 	}
 
 	return &types.CreateAppResp{
-		ID: appCreate.Id,
+		AppID:  appCreate.Id,
+		Secret: appCreate.Secret,
 	}, err
 }

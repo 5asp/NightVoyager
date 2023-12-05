@@ -1,0 +1,1 @@
+make gen m=appsvc

@@ -9,8 +9,7 @@ type SendReq struct {
 }
 
 type SendResp struct {
-	Id       int64  `json:"id"`
-	Name     string `json:"name"`
-	Token    string `json:"token"`
-	ExpireAt string `json:"expireAt"`
+	Credit   int `json:"credit"`
+	Faild    int `json:"faild"`
+	Successd int `json:"successd"`
 }

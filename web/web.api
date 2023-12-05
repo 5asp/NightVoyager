@@ -13,11 +13,13 @@ type (
 	}
 	// 定义登录接口的 json 响应体
 	CreateAppResp {
-		ID int64 `json:"id"`
+		AppID  int64  `json:"appid"`
+		Secret string `json:"secret"`
 	}
 )
 @server (
 	maxBytes:   1048576
+	middleware: WebAuthMiddleware
 )
 
 service web-api {

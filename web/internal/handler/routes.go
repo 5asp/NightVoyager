@@ -11,13 +11,16 @@ import (
 
 func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
-		[]rest.Route{
-			{
-				Method:  http.MethodPost,
-				Path:    "/app/create",
-				Handler: CreateAppHandler(serverCtx),
-			},
-		},
+		rest.WithMiddlewares(
+			[]rest.Middleware{serverCtx.WebAuthMiddleware},
+			[]rest.Route{
+				{
+					Method:  http.MethodPost,
+					Path:    "/app/create",
+					Handler: CreateAppHandler(serverCtx),
+				},
+			}...,
+		),
 		rest.WithMaxBytes(1048576),
 	)
 }

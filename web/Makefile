@@ -1,6 +1,6 @@
 .PHONY: gen 
 gen:
-	@goctl api go --api web.api --dir .
+	@goctl api go --api ${name}.api --dir .
 .PHONY: run 
 run:
-	@go run web.go -f etc/web-api.yaml
+	@go run ${name}.go -f etc/${name}-api.yaml
