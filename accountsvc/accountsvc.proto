@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package accountsvc;
+option go_package="./accountsvc";
+
+message GetByAccountReq {
+  string account = 1;
+}
+
+message GetByAccountResp {
+  string pong = 1;
+}
+
+message GetByIdReq {
+  int64 id = 1;
+}
+
+message GetByIdResp {
+  string pong = 1;
+}
+
+service Accountsvc {
+  rpc GetByAccount(GetByAccountReq) returns(GetByAccountResp);
+  rpc GetById(Request) returns(Response);
+  rpc Create(Request) returns(Response);
+  rpc Update(Request) returns(Response);
+  rpc Delete(Request) returns(Response);
+}

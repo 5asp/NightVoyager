@@ -1,28 +1,252 @@
 syntax = "v1"
+import "../pkg/api/base.api"
 
 info (
 	title:   "web manage"
 	desc:    "user dashboard"
 	author:  "xiaxuejin"
 	version: "v1"
+	email: "ahead4@duck.com"
 )
 
 type (
-	// 定义登录接口的 json 请求体
-	CreateAppReq {
+	RegReq {
+		Account  string `json:"account"`
+		Password string `json:"password"`
 	}
-	// 定义登录接口的 json 响应体
-	CreateAppResp {
+	RegResp {
+	}
+	LogReq {
+		Account  string `json:"account"`
+		Password string `json:"password"`
+	}
+	LogResp {
+		Token string `json:"token"`
+	}
+)
+
+type (
+	App {
+		Id   int64  `path:"id"`
+		Name string `json:"name"`
+		Age  int    `json:"age"`
+	}
+	AppAddReq {
+	}
+	AppAddResp {
 		AppID  int64  `json:"appid"`
 		Secret string `json:"secret"`
 	}
+	AppUdReq    struct{}
+	AppUdResp   struct{}
+	AppDelReq   struct{}
+	AppDelResp  struct{}
+	AppInfoReq  struct{}
+	AppInfoResp {
+		Base
+		Data App `json:"data"`
+	}
+	AppLsReq  struct{}
+	AppLsResp {
+		Base
+		Data []App `json:"data"`
+	}
 )
+
+type (
+	TplAddReq   struct{}
+	TplAddResp  struct{}
+	TplDelReq   struct{}
+	TplDelResp  struct{}
+	TplUdReq    struct{}
+	TplUdResp   struct{}
+	TplInfoReq  struct{}
+	TplInfoResp struct{}
+	TplLsReq    struct{}
+	TplLsResp   struct{}
+)
+
+type (
+	SigAddReq   struct{}
+	SigAddResp  struct{}
+	SigDelReq   struct{}
+	SigDelResp  struct{}
+	SigUdReq    struct{}
+	SigUdResp   struct{}
+	SigInfoReq  struct{}
+	SigInfoResp struct{}
+	SigLsReq    struct{}
+	SigLsResp   struct{}
+)
+
+type (
+	AddrAddReq   struct{}
+	AddrAddResp  struct{}
+	AddrDelReq   struct{}
+	AddrDelResp  struct{}
+	AddrUdReq    struct{}
+	AddrUdResp   struct{}
+	AddrInfoReq  struct{}
+	AddrInfoResp struct{}
+	AddrLsReq    struct{}
+	AddrLsResp   struct{}
+)
+
 @server (
+	prefix: /v1
+	group:  auth
 	maxBytes:   1048576
-	middleware: WebAuthMiddleware
 )
 
 service web-api {
-	@handler CreateApp
-	post /app/create (CreateAppReq) returns (CreateAppResp)
+	@doc(
+		summary: "注册用户"
+	)
+	@handler Reg
+	post /auth/reg (RegReq) returns (RegResp)
+	@doc(
+		summary: "用户登录"
+	)
+	@handler Log
+	post /auth/log (LogReq) returns (LogResp)
+}
+
+@server (
+	prefix: /v1
+	group:  app
+	maxBytes:   1048576
+	jwt: Auth
+)
+
+service web-api {
+	@doc(
+		summary: "创建APP应用"
+	)
+	@handler AddApp
+	post /app/add (AppAddReq) returns (AppAddResp)
+	@doc(
+		summary: "更新APP应用"
+	)
+	@handler UdApp
+	post /app/ud (AppUdReq) returns (AppUdResp)
+	@doc(
+		summary: "删除APP应用"
+	)
+	@handler DelApp
+	post /app/del (AppDelReq) returns (AppDelResp)
+	@doc(
+		summary: "APP应用详情"
+	)
+	@handler AppInfo
+	get /app/info (AppInfoReq) returns (AppInfoResp)
+	@doc(
+		summary: "APP应用列表"
+	)
+	@handler AppLs
+	get /app/ls (AppLsReq) returns (AppLsResp)
+}
+
+@server (
+	prefix: /v1
+	group:  tpl
+	maxBytes:   1048576
+	jwt: Auth
+)
+
+service web-api {
+	@doc(
+		summary: "创建模板"
+	)
+	@handler AddTpl
+	post /tpl/add (TplAddReq) returns (TplAddResp)
+	@doc(
+		summary: "更新模板"
+	)
+	@handler UdTpl
+	post /tpl/ud (TplUdReq) returns (TplUdResp)
+	@doc(
+		summary: "删除模板"
+	)
+	@handler DelTpl
+	post /tpl/del (TplDelReq) returns (TplDelResp)
+	@doc(
+		summary: "模板详情"
+	)
+	@handler TplInfo
+	get /tpl/info (TplInfoReq) returns (TplInfoResp)
+	@doc(
+		summary: "模板列表"
+	)
+	@handler TplLs
+	get /tpl/ls (TplLsReq) returns (TplLsResp)
+}
+
+@server (
+	prefix: /v1
+	group:  sig
+	maxBytes:   1048576
+	jwt: Auth
+)
+
+service web-api {
+	@doc(
+		summary: "创建签名"
+	)
+	@handler AddSig
+	post /sig/add (SigAddReq) returns (SigAddResp)
+	@doc(
+		summary: "更新签名"
+	)
+	@handler UdSig
+	post /sig/ud (SigUdReq) returns (SigUdResp)
+	@doc(
+		summary: "删除签名"
+	)
+	@handler DelSig
+	post /sig/del (SigDelReq) returns (SigDelResp)
+	@doc(
+		summary: "签名详情"
+	)
+	@handler SigInfo
+	get /sig/info (SigInfoReq) returns (SigInfoResp)
+	@doc(
+		summary: "签名列表"
+	)
+	@handler SigLs
+	get /sig/ls (SigLsReq) returns (SigLsResp)
+}
+
+@server (
+	prefix: /v1
+	group:  addr
+	maxBytes:   1048576
+	jwt: Auth
+)
+
+service web-api {
+	@doc(
+		summary: "创建地址簿"
+	)
+	@handler AddAddr
+	post /addr/add (AddrAddReq) returns (AddrAddResp)
+	@doc(
+		summary: "更新地址簿"
+	)
+	@handler UdAddr
+	post /addr/ud (AddrUdReq) returns (AddrUdResp)
+	@doc(
+		summary: "删除地址簿"
+	)
+	@handler DelAddr
+	post /addr/del (AddrDelReq) returns (AddrDelResp)
+	@doc(
+		summary: "地址簿详情"
+	)
+	@handler AddrInfo
+	get /addr/info (AddrInfoReq) returns (AddrInfoResp)
+	@doc(
+		summary: "地址簿列表"
+	)
+	@handler AddrLs
+	get /addr/ls (AddrLsReq) returns (AddrLsResp)
 }

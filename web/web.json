@@ -1,0 +1,312 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "web manage",
+    "description": "user dashboard",
+    "version": "v1"
+  },
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/v1/app/add": {
+      "post": {
+        "summary": "创建APP应用",
+        "operationId": "AddApp",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/AppAddResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AppAddReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "app"
+        ]
+      }
+    },
+    "/v1/app/delete": {
+      "post": {
+        "summary": "删除APP应用",
+        "operationId": "DeleteApp",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/AppDeleteResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AppDeleteReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "app"
+        ]
+      }
+    },
+    "/v1/app/info": {
+      "get": {
+        "summary": "APP应用详情",
+        "operationId": "AppInfo",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/AppInfoResp"
+            }
+          }
+        },
+        "requestBody": {},
+        "tags": [
+          "app"
+        ]
+      }
+    },
+    "/v1/app/list": {
+      "get": {
+        "summary": "APP应用列表",
+        "operationId": "AppList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/AppListResp"
+            }
+          }
+        },
+        "requestBody": {},
+        "tags": [
+          "app"
+        ]
+      }
+    },
+    "/v1/app/update": {
+      "post": {
+        "summary": "更新APP应用",
+        "operationId": "UpdateApp",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/AppUpdateResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/AppUpdateReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "app"
+        ]
+      }
+    },
+    "/v1/auth/login": {
+      "post": {
+        "summary": "用户登录",
+        "operationId": "Login",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/LoginResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/LoginReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "auth"
+        ]
+      }
+    },
+    "/v1/auth/reg": {
+      "post": {
+        "summary": "注册用户",
+        "operationId": "Reg",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/RegResp"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/RegReq"
+            }
+          }
+        ],
+        "requestBody": {},
+        "tags": [
+          "auth"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "AppAddReq": {
+      "type": "object",
+      "title": "AppAddReq"
+    },
+    "AppAddResp": {
+      "type": "object",
+      "properties": {
+        "appid": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "secret": {
+          "type": "string"
+        }
+      },
+      "title": "AppAddResp",
+      "required": [
+        "appid",
+        "secret"
+      ]
+    },
+    "AppDeleteReq": {
+      "type": "object",
+      "title": "AppDeleteReq"
+    },
+    "AppDeleteResp": {
+      "type": "object",
+      "title": "AppDeleteResp"
+    },
+    "AppInfoReq": {
+      "type": "object",
+      "title": "AppInfoReq"
+    },
+    "AppInfoResp": {
+      "type": "object",
+      "title": "AppInfoResp"
+    },
+    "AppListReq": {
+      "type": "object",
+      "title": "AppListReq"
+    },
+    "AppListResp": {
+      "type": "object",
+      "title": "AppListResp"
+    },
+    "AppUpdateReq": {
+      "type": "object",
+      "title": "AppUpdateReq"
+    },
+    "AppUpdateResp": {
+      "type": "object",
+      "title": "AppUpdateResp"
+    },
+    "LoginReq": {
+      "type": "object",
+      "properties": {
+        "account": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "title": "LoginReq",
+      "required": [
+        "account",
+        "password"
+      ]
+    },
+    "LoginResp": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string"
+        }
+      },
+      "title": "LoginResp",
+      "required": [
+        "token"
+      ]
+    },
+    "RegReq": {
+      "type": "object",
+      "properties": {
+        "account": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      },
+      "title": "RegReq",
+      "required": [
+        "account",
+        "password"
+      ]
+    },
+    "RegResp": {
+      "type": "object",
+      "title": "RegResp"
+    }
+  },
+  "securityDefinitions": {
+    "apiKey": {
+      "type": "apiKey",
+      "description": "Enter JWT Bearer token **_only_**",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "security": [
+    {
+      "apiKey": []
+    }
+  ]
+}

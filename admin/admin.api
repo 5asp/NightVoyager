@@ -1,5 +1,5 @@
 syntax = "v1"
-
+import "../pkg/api/base.api"
 type Request {
 	Name string `path:"name,options=you|me"`
 }

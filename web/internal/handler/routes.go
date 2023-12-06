@@ -4,6 +4,11 @@ package handler
 import (
 	"net/http"
 
+	addr "github.com/aheadIV/NightVoyager/web/internal/handler/addr"
+	app "github.com/aheadIV/NightVoyager/web/internal/handler/app"
+	auth "github.com/aheadIV/NightVoyager/web/internal/handler/auth"
+	sig "github.com/aheadIV/NightVoyager/web/internal/handler/sig"
+	tpl "github.com/aheadIV/NightVoyager/web/internal/handler/tpl"
 	"github.com/aheadIV/NightVoyager/web/internal/svc"
 
 	"github.com/zeromicro/go-zero/rest"
@@ -11,16 +16,151 @@ import (
 
 func RegisterHandlers(server *rest.Server, serverCtx *svc.ServiceContext) {
 	server.AddRoutes(
-		rest.WithMiddlewares(
-			[]rest.Middleware{serverCtx.WebAuthMiddleware},
-			[]rest.Route{
-				{
-					Method:  http.MethodPost,
-					Path:    "/app/create",
-					Handler: CreateAppHandler(serverCtx),
-				},
-			}...,
-		),
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/auth/reg",
+				Handler: auth.RegHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/auth/log",
+				Handler: auth.LogHandler(serverCtx),
+			},
+		},
+		rest.WithPrefix("/v1"),
+		rest.WithMaxBytes(1048576),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/app/add",
+				Handler: app.AddAppHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/app/ud",
+				Handler: app.UdAppHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/app/del",
+				Handler: app.DelAppHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/app/info",
+				Handler: app.AppInfoHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/app/ls",
+				Handler: app.AppLsHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/v1"),
+		rest.WithMaxBytes(1048576),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/tpl/add",
+				Handler: tpl.AddTplHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/tpl/ud",
+				Handler: tpl.UdTplHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/tpl/del",
+				Handler: tpl.DelTplHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/tpl/info",
+				Handler: tpl.TplInfoHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/tpl/ls",
+				Handler: tpl.TplLsHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/v1"),
+		rest.WithMaxBytes(1048576),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/sig/add",
+				Handler: sig.AddSigHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/sig/ud",
+				Handler: sig.UdSigHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/sig/del",
+				Handler: sig.DelSigHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/sig/info",
+				Handler: sig.SigInfoHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/sig/ls",
+				Handler: sig.SigLsHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/v1"),
+		rest.WithMaxBytes(1048576),
+	)
+
+	server.AddRoutes(
+		[]rest.Route{
+			{
+				Method:  http.MethodPost,
+				Path:    "/addr/add",
+				Handler: addr.AddAddrHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/addr/ud",
+				Handler: addr.UdAddrHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodPost,
+				Path:    "/addr/del",
+				Handler: addr.DelAddrHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/addr/info",
+				Handler: addr.AddrInfoHandler(serverCtx),
+			},
+			{
+				Method:  http.MethodGet,
+				Path:    "/addr/ls",
+				Handler: addr.AddrLsHandler(serverCtx),
+			},
+		},
+		rest.WithJwt(serverCtx.Config.Auth.AccessSecret),
+		rest.WithPrefix("/v1"),
 		rest.WithMaxBytes(1048576),
 	)
 }
