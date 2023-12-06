@@ -3,6 +3,7 @@ package auth
 import (
 	"net/http"
 
+	"github.com/aheadIV/NightVoyager/pkg/response"
 	"github.com/aheadIV/NightVoyager/web/internal/logic/auth"
 	"github.com/aheadIV/NightVoyager/web/internal/svc"
 	"github.com/aheadIV/NightVoyager/web/internal/types"
@@ -22,7 +23,7 @@ func LogHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 		if err != nil {
 			httpx.ErrorCtx(r.Context(), w, err)
 		} else {
-			httpx.OkJsonCtx(r.Context(), w, resp)
+			response.Response(w, resp, err)
 		}
 	}
 }
