@@ -1,4 +1,4 @@
-package logic
+package accountlogsvclogic
 
 import (
 	"context"
@@ -9,22 +9,22 @@ import (
 	"github.com/zeromicro/go-zero/core/logx"
 )
 
-type DeleteLogic struct {
+type AccountLogListLogic struct {
 	ctx    context.Context
 	svcCtx *svc.ServiceContext
 	logx.Logger
 }
 
-func NewDeleteLogic(ctx context.Context, svcCtx *svc.ServiceContext) *DeleteLogic {
-	return &DeleteLogic{
+func NewAccountLogListLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AccountLogListLogic {
+	return &AccountLogListLogic{
 		ctx:    ctx,
 		svcCtx: svcCtx,
 		Logger: logx.WithContext(ctx),
 	}
 }
 
-func (l *DeleteLogic) Delete(in *accountsvc.DeleteReq) (*accountsvc.DeleteResp, error) {
+func (l *AccountLogListLogic) AccountLogList(in *accountsvc.AccountLogListReq) (*accountsvc.AccountLogListResp, error) {
 	// todo: add your logic here and delete this line
 
-	return &accountsvc.DeleteResp{}, nil
+	return &accountsvc.AccountLogListResp{}, nil
 }

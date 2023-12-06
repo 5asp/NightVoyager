@@ -2,7 +2,7 @@ CURRENT_DIR := $(shell basename "$(CURDIR)")
 
 .PHONY: gen 
 gen:
-	@goctl rpc protoc $(CURRENT_DIR).proto --go_out=./types --go-grpc_out=./types --zrpc_out=. --style go_zero
+	@goctl rpc protoc $(CURRENT_DIR).proto --go_out=./types --go-grpc_out=./types --zrpc_out=. --style go_zero -m
 docker:
     ifeq (,$(wildcard ./Dockerfile))
 	@goctl docker 

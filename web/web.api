@@ -1,5 +1,4 @@
 syntax = "v1"
-import "../pkg/api/base.api"
 
 info (
 	title:   "web manage"
@@ -15,6 +14,7 @@ type (
 		Password string `json:"password"`
 	}
 	RegResp {
+		Result string `json:"result"`
 	}
 	LogReq {
 		Account  string `json:"account"`
@@ -43,13 +43,11 @@ type (
 	AppDelResp  struct{}
 	AppInfoReq  struct{}
 	AppInfoResp {
-		Base
 		Data App `json:"data"`
 	}
 	AppLsReq  struct{}
 	AppLsResp {
-		Base
-		Data []App `json:"data"`
+		List []App `json:"list"`
 	}
 )
 

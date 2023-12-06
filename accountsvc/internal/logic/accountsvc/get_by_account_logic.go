@@ -1,10 +1,14 @@
-package logic
+package accountsvclogic
 
 import (
 	"context"
+	"errors"
 
 	"github.com/aheadIV/NightVoyager/accountsvc/internal/svc"
+	"github.com/aheadIV/NightVoyager/accountsvc/model"
 	"github.com/aheadIV/NightVoyager/accountsvc/types/accountsvc"
+	"github.com/go-rel/rel"
+	"github.com/go-rel/rel/where"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -24,7 +28,19 @@ func NewGetByAccountLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetB
 }
 
 func (l *GetByAccountLogic) GetByAccount(in *accountsvc.GetByAccountReq) (*accountsvc.GetByAccountResp, error) {
-	// todo: add your logic here and delete this line
-
+	var account model.Account
+	if in != nil && in.Account != "" {
+		query := rel.Select("account", "password").Where(where.Eq("account", in.Account))
+		if err := l.svcCtx.DB.Find(l.ctx, &account, query); err != nil {
+			if !errors.Is(err, rel.ErrNotFound) {
+				return nil, err
+			}
+			return &accountsvc.GetByAccountResp{}, nil
+		}
+		return &accountsvc.GetByAccountResp{Data: &accountsvc.Account{
+			Account:  account.Account,
+			Password: account.Password,
+		}}, nil
+	}
 	return &accountsvc.GetByAccountResp{}, nil
 }

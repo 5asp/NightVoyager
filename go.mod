@@ -10,6 +10,7 @@ require (
 	github.com/nats-io/nats.go v1.31.0
 	github.com/rs/xid v1.5.0
 	github.com/zeromicro/go-zero v1.6.0
+	github.com/zeromicro/x v0.0.0-20230424055333-01c7fb9548d4
 	google.golang.org/grpc v1.59.0
 	google.golang.org/protobuf v1.31.0
 )

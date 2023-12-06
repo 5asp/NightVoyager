@@ -7,6 +7,7 @@ type RegReq struct {
 }
 
 type RegResp struct {
+	Result string `json:"result"`
 }
 
 type LogReq struct {
@@ -48,7 +49,6 @@ type AppInfoReq struct {
 }
 
 type AppInfoResp struct {
-	Base
 	Data App `json:"data"`
 }
 
@@ -56,8 +56,7 @@ type AppLsReq struct {
 }
 
 type AppLsResp struct {
-	Base
-	Data []App `json:"data"`
+	List []App `json:"list"`
 }
 
 type TplAddReq struct {
@@ -148,9 +147,4 @@ type AddrLsReq struct {
 }
 
 type AddrLsResp struct {
-}
-
-type Base struct {
-	Code int    `json:"code"`
-	Msg  string `json:"msg"`
 }
