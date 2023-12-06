@@ -22,27 +22,27 @@ func NewAccountsvcServer(svcCtx *svc.ServiceContext) *AccountsvcServer {
 	}
 }
 
-func (s *AccountsvcServer) GetByAccount(ctx context.Context, in *accountsvc.Request) (*accountsvc.Response, error) {
+func (s *AccountsvcServer) GetByAccount(ctx context.Context, in *accountsvc.GetByAccountReq) (*accountsvc.GetByAccountResp, error) {
 	l := logic.NewGetByAccountLogic(ctx, s.svcCtx)
 	return l.GetByAccount(in)
 }
 
-func (s *AccountsvcServer) GetByID(ctx context.Context, in *accountsvc.Request) (*accountsvc.Response, error) {
-	l := logic.NewGetByIDLogic(ctx, s.svcCtx)
-	return l.GetByID(in)
+func (s *AccountsvcServer) GetById(ctx context.Context, in *accountsvc.GetByIdReq) (*accountsvc.GetByIdResp, error) {
+	l := logic.NewGetByIdLogic(ctx, s.svcCtx)
+	return l.GetById(in)
 }
 
-func (s *AccountsvcServer) Create(ctx context.Context, in *accountsvc.Request) (*accountsvc.Response, error) {
+func (s *AccountsvcServer) Create(ctx context.Context, in *accountsvc.CreateReq) (*accountsvc.CreateResp, error) {
 	l := logic.NewCreateLogic(ctx, s.svcCtx)
 	return l.Create(in)
 }
 
-func (s *AccountsvcServer) Update(ctx context.Context, in *accountsvc.Request) (*accountsvc.Response, error) {
+func (s *AccountsvcServer) Update(ctx context.Context, in *accountsvc.UpdateReq) (*accountsvc.UpdateResp, error) {
 	l := logic.NewUpdateLogic(ctx, s.svcCtx)
 	return l.Update(in)
 }
 
-func (s *AccountsvcServer) Delete(ctx context.Context, in *accountsvc.Request) (*accountsvc.Response, error) {
+func (s *AccountsvcServer) Delete(ctx context.Context, in *accountsvc.DeleteReq) (*accountsvc.DeleteResp, error) {
 	l := logic.NewDeleteLogic(ctx, s.svcCtx)
 	return l.Delete(in)
 }

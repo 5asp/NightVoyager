@@ -20,7 +20,7 @@ const _ = grpc.SupportPackageIsVersion7
 
 const (
 	Accountsvc_GetByAccount_FullMethodName = "/accountsvc.Accountsvc/GetByAccount"
-	Accountsvc_GetByID_FullMethodName      = "/accountsvc.Accountsvc/GetByID"
+	Accountsvc_GetById_FullMethodName      = "/accountsvc.Accountsvc/GetById"
 	Accountsvc_Create_FullMethodName       = "/accountsvc.Accountsvc/Create"
 	Accountsvc_Update_FullMethodName       = "/accountsvc.Accountsvc/Update"
 	Accountsvc_Delete_FullMethodName       = "/accountsvc.Accountsvc/Delete"
@@ -30,11 +30,11 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AccountsvcClient interface {
-	GetByAccount(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
-	GetByID(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
-	Create(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
-	Update(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
-	Delete(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
+	GetByAccount(ctx context.Context, in *GetByAccountReq, opts ...grpc.CallOption) (*GetByAccountResp, error)
+	GetById(ctx context.Context, in *GetByIdReq, opts ...grpc.CallOption) (*GetByIdResp, error)
+	Create(ctx context.Context, in *CreateReq, opts ...grpc.CallOption) (*CreateResp, error)
+	Update(ctx context.Context, in *UpdateReq, opts ...grpc.CallOption) (*UpdateResp, error)
+	Delete(ctx context.Context, in *DeleteReq, opts ...grpc.CallOption) (*DeleteResp, error)
 }
 
 type accountsvcClient struct {
@@ -45,8 +45,8 @@ func NewAccountsvcClient(cc grpc.ClientConnInterface) AccountsvcClient {
 	return &accountsvcClient{cc}
 }
 
-func (c *accountsvcClient) GetByAccount(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
-	out := new(Response)
+func (c *accountsvcClient) GetByAccount(ctx context.Context, in *GetByAccountReq, opts ...grpc.CallOption) (*GetByAccountResp, error) {
+	out := new(GetByAccountResp)
 	err := c.cc.Invoke(ctx, Accountsvc_GetByAccount_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -54,17 +54,17 @@ func (c *accountsvcClient) GetByAccount(ctx context.Context, in *Request, opts .
 	return out, nil
 }
 
-func (c *accountsvcClient) GetByID(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
-	out := new(Response)
-	err := c.cc.Invoke(ctx, Accountsvc_GetByID_FullMethodName, in, out, opts...)
+func (c *accountsvcClient) GetById(ctx context.Context, in *GetByIdReq, opts ...grpc.CallOption) (*GetByIdResp, error) {
+	out := new(GetByIdResp)
+	err := c.cc.Invoke(ctx, Accountsvc_GetById_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *accountsvcClient) Create(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
-	out := new(Response)
+func (c *accountsvcClient) Create(ctx context.Context, in *CreateReq, opts ...grpc.CallOption) (*CreateResp, error) {
+	out := new(CreateResp)
 	err := c.cc.Invoke(ctx, Accountsvc_Create_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -72,8 +72,8 @@ func (c *accountsvcClient) Create(ctx context.Context, in *Request, opts ...grpc
 	return out, nil
 }
 
-func (c *accountsvcClient) Update(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
-	out := new(Response)
+func (c *accountsvcClient) Update(ctx context.Context, in *UpdateReq, opts ...grpc.CallOption) (*UpdateResp, error) {
+	out := new(UpdateResp)
 	err := c.cc.Invoke(ctx, Accountsvc_Update_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -81,8 +81,8 @@ func (c *accountsvcClient) Update(ctx context.Context, in *Request, opts ...grpc
 	return out, nil
 }
 
-func (c *accountsvcClient) Delete(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
-	out := new(Response)
+func (c *accountsvcClient) Delete(ctx context.Context, in *DeleteReq, opts ...grpc.CallOption) (*DeleteResp, error) {
+	out := new(DeleteResp)
 	err := c.cc.Invoke(ctx, Accountsvc_Delete_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
@@ -94,11 +94,11 @@ func (c *accountsvcClient) Delete(ctx context.Context, in *Request, opts ...grpc
 // All implementations must embed UnimplementedAccountsvcServer
 // for forward compatibility
 type AccountsvcServer interface {
-	GetByAccount(context.Context, *Request) (*Response, error)
-	GetByID(context.Context, *Request) (*Response, error)
-	Create(context.Context, *Request) (*Response, error)
-	Update(context.Context, *Request) (*Response, error)
-	Delete(context.Context, *Request) (*Response, error)
+	GetByAccount(context.Context, *GetByAccountReq) (*GetByAccountResp, error)
+	GetById(context.Context, *GetByIdReq) (*GetByIdResp, error)
+	Create(context.Context, *CreateReq) (*CreateResp, error)
+	Update(context.Context, *UpdateReq) (*UpdateResp, error)
+	Delete(context.Context, *DeleteReq) (*DeleteResp, error)
 	mustEmbedUnimplementedAccountsvcServer()
 }
 
@@ -106,19 +106,19 @@ type AccountsvcServer interface {
 type UnimplementedAccountsvcServer struct {
 }
 
-func (UnimplementedAccountsvcServer) GetByAccount(context.Context, *Request) (*Response, error) {
+func (UnimplementedAccountsvcServer) GetByAccount(context.Context, *GetByAccountReq) (*GetByAccountResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetByAccount not implemented")
 }
-func (UnimplementedAccountsvcServer) GetByID(context.Context, *Request) (*Response, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetByID not implemented")
+func (UnimplementedAccountsvcServer) GetById(context.Context, *GetByIdReq) (*GetByIdResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetById not implemented")
 }
-func (UnimplementedAccountsvcServer) Create(context.Context, *Request) (*Response, error) {
+func (UnimplementedAccountsvcServer) Create(context.Context, *CreateReq) (*CreateResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
 }
-func (UnimplementedAccountsvcServer) Update(context.Context, *Request) (*Response, error) {
+func (UnimplementedAccountsvcServer) Update(context.Context, *UpdateReq) (*UpdateResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
 }
-func (UnimplementedAccountsvcServer) Delete(context.Context, *Request) (*Response, error) {
+func (UnimplementedAccountsvcServer) Delete(context.Context, *DeleteReq) (*DeleteResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
 }
 func (UnimplementedAccountsvcServer) mustEmbedUnimplementedAccountsvcServer() {}
@@ -135,7 +135,7 @@ func RegisterAccountsvcServer(s grpc.ServiceRegistrar, srv AccountsvcServer) {
 }
 
 func _Accountsvc_GetByAccount_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Request)
+	in := new(GetByAccountReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -147,31 +147,31 @@ func _Accountsvc_GetByAccount_Handler(srv interface{}, ctx context.Context, dec 
 		FullMethod: Accountsvc_GetByAccount_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AccountsvcServer).GetByAccount(ctx, req.(*Request))
+		return srv.(AccountsvcServer).GetByAccount(ctx, req.(*GetByAccountReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _Accountsvc_GetByID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Request)
+func _Accountsvc_GetById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetByIdReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AccountsvcServer).GetByID(ctx, in)
+		return srv.(AccountsvcServer).GetById(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Accountsvc_GetByID_FullMethodName,
+		FullMethod: Accountsvc_GetById_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AccountsvcServer).GetByID(ctx, req.(*Request))
+		return srv.(AccountsvcServer).GetById(ctx, req.(*GetByIdReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Accountsvc_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Request)
+	in := new(CreateReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -183,13 +183,13 @@ func _Accountsvc_Create_Handler(srv interface{}, ctx context.Context, dec func(i
 		FullMethod: Accountsvc_Create_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AccountsvcServer).Create(ctx, req.(*Request))
+		return srv.(AccountsvcServer).Create(ctx, req.(*CreateReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Accountsvc_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Request)
+	in := new(UpdateReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -201,13 +201,13 @@ func _Accountsvc_Update_Handler(srv interface{}, ctx context.Context, dec func(i
 		FullMethod: Accountsvc_Update_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AccountsvcServer).Update(ctx, req.(*Request))
+		return srv.(AccountsvcServer).Update(ctx, req.(*UpdateReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
 func _Accountsvc_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Request)
+	in := new(DeleteReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -219,7 +219,7 @@ func _Accountsvc_Delete_Handler(srv interface{}, ctx context.Context, dec func(i
 		FullMethod: Accountsvc_Delete_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AccountsvcServer).Delete(ctx, req.(*Request))
+		return srv.(AccountsvcServer).Delete(ctx, req.(*DeleteReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -236,8 +236,8 @@ var Accountsvc_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _Accountsvc_GetByAccount_Handler,
 		},
 		{
-			MethodName: "GetByID",
-			Handler:    _Accountsvc_GetByID_Handler,
+			MethodName: "GetById",
+			Handler:    _Accountsvc_GetById_Handler,
 		},
 		{
 			MethodName: "Create",

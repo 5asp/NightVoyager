@@ -13,15 +13,24 @@ import (
 )
 
 type (
-	Request  = accountsvc.Request
-	Response = accountsvc.Response
+	Account          = accountsvc.Account
+	CreateReq        = accountsvc.CreateReq
+	CreateResp       = accountsvc.CreateResp
+	DeleteReq        = accountsvc.DeleteReq
+	DeleteResp       = accountsvc.DeleteResp
+	GetByAccountReq  = accountsvc.GetByAccountReq
+	GetByAccountResp = accountsvc.GetByAccountResp
+	GetByIdReq       = accountsvc.GetByIdReq
+	GetByIdResp      = accountsvc.GetByIdResp
+	UpdateReq        = accountsvc.UpdateReq
+	UpdateResp       = accountsvc.UpdateResp
 
 	Accountsvc interface {
-		GetByAccount(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
-		GetByID(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
-		Create(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
-		Update(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
-		Delete(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error)
+		GetByAccount(ctx context.Context, in *GetByAccountReq, opts ...grpc.CallOption) (*GetByAccountResp, error)
+		GetById(ctx context.Context, in *GetByIdReq, opts ...grpc.CallOption) (*GetByIdResp, error)
+		Create(ctx context.Context, in *CreateReq, opts ...grpc.CallOption) (*CreateResp, error)
+		Update(ctx context.Context, in *UpdateReq, opts ...grpc.CallOption) (*UpdateResp, error)
+		Delete(ctx context.Context, in *DeleteReq, opts ...grpc.CallOption) (*DeleteResp, error)
 	}
 
 	defaultAccountsvc struct {
@@ -35,27 +44,27 @@ func NewAccountsvc(cli zrpc.Client) Accountsvc {
 	}
 }
 
-func (m *defaultAccountsvc) GetByAccount(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
+func (m *defaultAccountsvc) GetByAccount(ctx context.Context, in *GetByAccountReq, opts ...grpc.CallOption) (*GetByAccountResp, error) {
 	client := accountsvc.NewAccountsvcClient(m.cli.Conn())
 	return client.GetByAccount(ctx, in, opts...)
 }
 
-func (m *defaultAccountsvc) GetByID(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
+func (m *defaultAccountsvc) GetById(ctx context.Context, in *GetByIdReq, opts ...grpc.CallOption) (*GetByIdResp, error) {
 	client := accountsvc.NewAccountsvcClient(m.cli.Conn())
-	return client.GetByID(ctx, in, opts...)
+	return client.GetById(ctx, in, opts...)
 }
 
-func (m *defaultAccountsvc) Create(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
+func (m *defaultAccountsvc) Create(ctx context.Context, in *CreateReq, opts ...grpc.CallOption) (*CreateResp, error) {
 	client := accountsvc.NewAccountsvcClient(m.cli.Conn())
 	return client.Create(ctx, in, opts...)
 }
 
-func (m *defaultAccountsvc) Update(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
+func (m *defaultAccountsvc) Update(ctx context.Context, in *UpdateReq, opts ...grpc.CallOption) (*UpdateResp, error) {
 	client := accountsvc.NewAccountsvcClient(m.cli.Conn())
 	return client.Update(ctx, in, opts...)
 }
 
-func (m *defaultAccountsvc) Delete(ctx context.Context, in *Request, opts ...grpc.CallOption) (*Response, error) {
+func (m *defaultAccountsvc) Delete(ctx context.Context, in *DeleteReq, opts ...grpc.CallOption) (*DeleteResp, error) {
 	client := accountsvc.NewAccountsvcClient(m.cli.Conn())
 	return client.Delete(ctx, in, opts...)
 }

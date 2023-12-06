@@ -23,8 +23,8 @@ func NewGetByAccountLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetB
 	}
 }
 
-func (l *GetByAccountLogic) GetByAccount(in *accountsvc.Request) (*accountsvc.Response, error) {
+func (l *GetByAccountLogic) GetByAccount(in *accountsvc.GetByAccountReq) (*accountsvc.GetByAccountResp, error) {
 	// todo: add your logic here and delete this line
 
-	return &accountsvc.Response{}, nil
+	return &accountsvc.GetByAccountResp{}, nil
 }

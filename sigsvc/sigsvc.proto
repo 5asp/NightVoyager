@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package sigsvc;
+option go_package="./sigsvc";
+
+message Request {
+  string ping = 1;
+}
+
+message Response {
+  string pong = 1;
+}
+
+service Sigsvc {
+  rpc Ping(Request) returns(Response);
+}

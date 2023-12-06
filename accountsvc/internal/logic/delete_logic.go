@@ -23,8 +23,8 @@ func NewDeleteLogic(ctx context.Context, svcCtx *svc.ServiceContext) *DeleteLogi
 	}
 }
 
-func (l *DeleteLogic) Delete(in *accountsvc.Request) (*accountsvc.Response, error) {
+func (l *DeleteLogic) Delete(in *accountsvc.DeleteReq) (*accountsvc.DeleteResp, error) {
 	// todo: add your logic here and delete this line
 
-	return &accountsvc.Response{}, nil
+	return &accountsvc.DeleteResp{}, nil
 }

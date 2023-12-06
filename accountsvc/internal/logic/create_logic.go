@@ -23,8 +23,8 @@ func NewCreateLogic(ctx context.Context, svcCtx *svc.ServiceContext) *CreateLogi
 	}
 }
 
-func (l *CreateLogic) Create(in *accountsvc.Request) (*accountsvc.Response, error) {
+func (l *CreateLogic) Create(in *accountsvc.CreateReq) (*accountsvc.CreateResp, error) {
 	// todo: add your logic here and delete this line
 
-	return &accountsvc.Response{}, nil
+	return &accountsvc.CreateResp{}, nil
 }

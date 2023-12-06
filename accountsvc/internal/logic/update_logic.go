@@ -23,8 +23,8 @@ func NewUpdateLogic(ctx context.Context, svcCtx *svc.ServiceContext) *UpdateLogi
 	}
 }
 
-func (l *UpdateLogic) Update(in *accountsvc.Request) (*accountsvc.Response, error) {
+func (l *UpdateLogic) Update(in *accountsvc.UpdateReq) (*accountsvc.UpdateResp, error) {
 	// todo: add your logic here and delete this line
 
-	return &accountsvc.Response{}, nil
+	return &accountsvc.UpdateResp{}, nil
 }
