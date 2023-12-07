@@ -4,6 +4,7 @@ import "time"
 
 type App struct {
 	ID        int       `db:"id,primary"`
+	Name      string    `db:"name"`
 	Secret    string    `db:"secret"`
 	Status    int       `db:"status"`
 	Remark    string    `db:"remark"`

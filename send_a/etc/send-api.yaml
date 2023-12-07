@@ -1,9 +1,0 @@
-Name: send-api
-Host: 0.0.0.0
-Port: 8870
-
-AppRpc:
-  Etcd:
-    Hosts:
-    - 127.0.0.1:2379
-    Key: appsvc.rpc

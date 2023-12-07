@@ -14,4 +14,5 @@ type Config struct {
 	AccountRPC    zrpc.RpcClientConf
 	AccountLogRPC zrpc.RpcClientConf
 	AppRPC        zrpc.RpcClientConf
+	PageSize      int64
 }

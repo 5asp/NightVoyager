@@ -54,3 +54,12 @@ service SendLogsvc {
   rpc InsertLog(Req)returns(Resp);
   rpc SendLogList(Req)returns(Resp);
 }
+
+message ChannelListReq {}
+message ChannelListResp{}
+message CreateChannelReq {}
+message CreateChannelResp {}
+service AppChannel {
+  rpc CreateChannel(CreateChannelReq) returns (CreateChannelResp);
+  rpc ChannelList(ChannelListReq) returns(ChannelListResp);
+}

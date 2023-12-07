@@ -2,7 +2,6 @@ package appsvclogic
 
 import (
 	"context"
-	"fmt"
 	"time"
 
 	"github.com/aheadIV/NightVoyager/appsvc/internal/svc"
@@ -35,8 +34,8 @@ func (l *CreateAppLogic) CreateApp(in *appsvc.CreateAppReq) (*appsvc.CreateAppRe
 			CreatedAt: time.Now(),
 			Status:    1,
 			Secret:    utils.CreateUid(),
+			Name:      in.GetName(),
 		}
-		fmt.Println(app)
 		err := l.svcCtx.DB.Insert(l.ctx, &app)
 		if err != nil {
 			return nil, err

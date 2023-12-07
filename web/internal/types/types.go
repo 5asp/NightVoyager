@@ -25,6 +25,7 @@ type App struct {
 	Secret    string `json:"secret"`
 	Status    int    `json:"status"`
 	Remark    string `json:"remark"`
+	Name      string `json:"name"`
 	CreatedAt int64  `json:"created_at"`
 	UpdatedAt int64  `json:"updated_at"`
 	AccountId int    `json:"account_id"`
@@ -62,7 +63,8 @@ type AppLsReq struct {
 }
 
 type AppLsResp struct {
-	List []App `json:"list"`
+	List  []App `json:"list"`
+	Total int   `json:"total"`
 }
 
 type TplAddReq struct {

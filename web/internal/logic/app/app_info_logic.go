@@ -2,6 +2,7 @@ package app
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/aheadIV/NightVoyager/web/internal/svc"
 	"github.com/aheadIV/NightVoyager/web/internal/types"
@@ -25,6 +26,6 @@ func NewAppInfoLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AppInfoLo
 
 func (l *AppInfoLogic) AppInfo(req *types.AppInfoReq) (resp *types.AppInfoResp, err error) {
 	// todo: add your logic here and delete this line
-
+	fmt.Println(l.svcCtx.Config.PageSize)
 	return
 }
