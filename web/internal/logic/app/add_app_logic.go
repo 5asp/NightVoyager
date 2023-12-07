@@ -2,6 +2,7 @@ package app
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/aheadIV/NightVoyager/web/internal/svc"
 	"github.com/aheadIV/NightVoyager/web/internal/types"
@@ -24,7 +25,6 @@ func NewAddAppLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AddAppLogi
 }
 
 func (l *AddAppLogic) AddApp(req *types.AppAddReq) (resp *types.AppAddResp, err error) {
-	// todo: add your logic here and delete this line
-
+	fmt.Println(l.ctx.Value("account"))
 	return
 }

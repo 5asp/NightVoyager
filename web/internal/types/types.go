@@ -7,7 +7,7 @@ type RegReq struct {
 }
 
 type RegResp struct {
-	Result string `json:"result"`
+	Err string `json:"err,omitempty"`
 }
 
 type LogReq struct {
@@ -17,6 +17,7 @@ type LogReq struct {
 
 type LogResp struct {
 	Token string `json:"token"`
+	Err   string `json:"err,omitempty"`
 }
 
 type App struct {

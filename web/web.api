@@ -14,7 +14,7 @@ type (
 		Password string `json:"password"`
 	}
 	RegResp {
-		Result string `json:"result"`
+		Err string `json:"err,omitempty"`
 	}
 	LogReq {
 		Account  string `json:"account"`
@@ -22,6 +22,7 @@ type (
 	}
 	LogResp {
 		Token string `json:"token"`
+		Err   string `json:"err,omitempty"`
 	}
 )
 

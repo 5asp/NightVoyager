@@ -24,7 +24,15 @@ func NewInsertLogLogic(ctx context.Context, svcCtx *svc.ServiceContext) *InsertL
 }
 
 func (l *InsertLogLogic) InsertLog(in *accountsvc.InsertLogReq) (*accountsvc.InsertLogResp, error) {
-	// todo: add your logic here and delete this line
-
+	// if in != nil {
+	// 	data := &model.AccountLog{
+	// 		AccountID: ,
+	// 	}
+	// 	err := l.svcCtx.DB.Insert(l.ctx, data)
+	// 	if err != nil {
+	// 		return nil, err
+	// 	}
+	// 	return &accountsvc.CreateResp{Id: int64(data.ID)}, nil
+	// }
 	return &accountsvc.InsertLogResp{}, nil
 }

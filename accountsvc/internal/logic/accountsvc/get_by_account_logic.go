@@ -40,6 +40,7 @@ func (l *GetByAccountLogic) GetByAccount(in *accountsvc.GetByAccountReq) (*accou
 		return &accountsvc.GetByAccountResp{Data: &accountsvc.Account{
 			Account:  account.Account,
 			Password: account.Password,
+			Id:       int64(account.ID),
 		}}, nil
 	}
 	return &accountsvc.GetByAccountResp{}, nil

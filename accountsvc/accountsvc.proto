@@ -40,7 +40,7 @@ message DeleteReq {
   int64 id = 1;
 }
 message DeleteResp {
-  int64 result = 1;
+  string err = 1;
 }
 
 service AccountSvc {
@@ -59,12 +59,13 @@ message AccountLog {
   string ip_addr = 4;
   string device = 5;
 }
+
 message InsertLogReq {
   AccountLog data = 1;
 }
 
 message InsertLogResp {
-  int64 result = 1;
+  string err = 1;
 }
 message AccountLogListReq {
   int64 id = 1;

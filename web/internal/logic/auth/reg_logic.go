@@ -4,7 +4,6 @@ import (
 	"context"
 
 	"github.com/aheadIV/NightVoyager/accountsvc/types/accountsvc"
-	"github.com/aheadIV/NightVoyager/pkg/msg"
 	"github.com/aheadIV/NightVoyager/pkg/utils"
 	"github.com/aheadIV/NightVoyager/web/internal/svc"
 	"github.com/aheadIV/NightVoyager/web/internal/types"
@@ -29,17 +28,16 @@ func NewRegLogic(ctx context.Context, svcCtx *svc.ServiceContext) *RegLogic {
 func (l *RegLogic) Reg(req *types.RegReq) (resp *types.RegResp, err error) {
 	// todo: add your logic here and delete this line
 	res, err := l.svcCtx.AccountRPC.GetByAccount(l.ctx, &accountsvc.GetByAccountReq{Account: req.Account})
-
 	if err != nil {
 		return nil, err
 	}
-	if res.Data != nil {
-		resp.Result = msg.Exists
-		return
+	accountData := res.GetData()
+	if accountData != nil {
+		return &types.RegResp{Err: "帐号已经注册"}, nil
 	}
-	password, _ := utils.CreatePassword(req.Password)
+	password, _ := utils.CreatePassword(req.Password + l.svcCtx.Config.Auth.AccessSecret)
 
-	create, err := l.svcCtx.AccountRPC.Create(l.ctx, &accountsvc.CreateReq{
+	_, err = l.svcCtx.AccountRPC.Create(l.ctx, &accountsvc.CreateReq{
 		Data: &accountsvc.Account{
 			Account:  req.Account,
 			Password: password,
@@ -48,9 +46,5 @@ func (l *RegLogic) Reg(req *types.RegReq) (resp *types.RegResp, err error) {
 	if err != nil {
 		return nil, err
 	}
-	if create.Id == 0 {
-		return nil, err
-	}
-
-	return &types.RegResp{Result: msg.Success}, nil
+	return &types.RegResp{}, nil
 }
