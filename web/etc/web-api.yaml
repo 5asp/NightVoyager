@@ -1,10 +1,18 @@
 Name: web-api
 Host: 0.0.0.0
 Port: 8888
-AccountRPC:  
-    Endpoints:  
-        - 127.0.0.1:8080  
-    NonBlock: true
-Auth: 
+AccountRPC:
+  Endpoints:
+  - 127.0.0.1:8080
+  NonBlock: true
+AccountLogRPC:
+  Endpoints:
+  - 127.0.0.1:8080
+  NonBlock: true
+AppRPC:
+  Endpoints:
+  - 127.0.0.1:8081
+  NonBlock: true
+Auth:
   AccessSecret: generationexists
   AccessExpire: 1300

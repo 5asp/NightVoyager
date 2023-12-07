@@ -3,14 +3,42 @@ syntax = "proto3";
 package tplsvc;
 option go_package="./tplsvc";
 
-message Request {
+message GetTplByIdReq {
+  int64 id = 1;
+}
+
+message GetTplByIdResp {
+  string pong = 1;
+}
+
+message CreateTplReq {
   string ping = 1;
 }
 
-message Response {
+message CreateTplResp {
   string pong = 1;
 }
 
 service Tplsvc {
-  rpc Ping(Request) returns(Response);
+  rpc GetById(GetTplByIdReq) returns(GetTplByIdResp);
+  rpc Create(CreateReq) returns(CreateResp);
+  rpc Update(UpdateReq) returns(UpdateResp);
+  rpc Delete(DeleteReq) returns(DeleteResp);
+  rpc List(DeleteReq) returns(DeleteResp);
 }
+
+message GetSigByIdReq {
+  string ping = 1;
+}
+message GetSigByIdResp {
+  string pong = 1;
+}
+
+service TplSignsvc {
+  rpc GetById(GetSigByIdReq) returns(GetSigByIdResp);
+  rpc Create(CreateReq) returns(CreateResp);
+  rpc Update(UpdateReq) returns(UpdateResp);
+  rpc Delete(DeleteReq) returns(DeleteResp);
+  rpc List(DeleteReq) returns(DeleteResp);
+}
+ 

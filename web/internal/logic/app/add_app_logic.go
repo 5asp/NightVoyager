@@ -2,8 +2,10 @@ package app
 
 import (
 	"context"
-	"fmt"
+	"encoding/json"
+	"errors"
 
+	"github.com/aheadIV/NightVoyager/appsvc/types/appsvc"
 	"github.com/aheadIV/NightVoyager/web/internal/svc"
 	"github.com/aheadIV/NightVoyager/web/internal/types"
 
@@ -25,6 +27,21 @@ func NewAddAppLogic(ctx context.Context, svcCtx *svc.ServiceContext) *AddAppLogi
 }
 
 func (l *AddAppLogic) AddApp(req *types.AppAddReq) (resp *types.AppAddResp, err error) {
-	fmt.Println(l.ctx.Value("account"))
-	return
+	if len(req.Name) < 0 {
+		return &types.AppAddResp{Err: "应用名称不能为空"}, nil
+	}
+	accountID := l.ctx.Value("account_id")
+	f, err := accountID.(json.Number).Int64()
+	if err != nil {
+		return nil, errors.New("account not exist.")
+	}
+	newApp := &appsvc.CreateAppReq{
+		AccountId: f,
+		Name:      req.Name,
+	}
+	res, err := l.svcCtx.AppRPC.CreateApp(l.ctx, newApp)
+	if err != nil {
+		return nil, err
+	}
+	return &types.AppAddResp{AppID: res.Id}, nil
 }

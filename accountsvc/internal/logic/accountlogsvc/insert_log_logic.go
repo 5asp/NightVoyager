@@ -2,8 +2,10 @@ package accountlogsvclogic
 
 import (
 	"context"
+	"time"
 
 	"github.com/aheadIV/NightVoyager/accountsvc/internal/svc"
+	"github.com/aheadIV/NightVoyager/accountsvc/model"
 	"github.com/aheadIV/NightVoyager/accountsvc/types/accountsvc"
 
 	"github.com/zeromicro/go-zero/core/logx"
@@ -24,15 +26,17 @@ func NewInsertLogLogic(ctx context.Context, svcCtx *svc.ServiceContext) *InsertL
 }
 
 func (l *InsertLogLogic) InsertLog(in *accountsvc.InsertLogReq) (*accountsvc.InsertLogResp, error) {
-	// if in != nil {
-	// 	data := &model.AccountLog{
-	// 		AccountID: ,
-	// 	}
-	// 	err := l.svcCtx.DB.Insert(l.ctx, data)
-	// 	if err != nil {
-	// 		return nil, err
-	// 	}
-	// 	return &accountsvc.CreateResp{Id: int64(data.ID)}, nil
-	// }
+	if in != nil {
+		data := in.GetData()
+		err := l.svcCtx.DB.Insert(l.ctx, &model.AccountLog{
+			AccountID: int(data.AccountId),
+			IpAddr:    data.IpAddr,
+			Device:    data.Device,
+			CreatedAt: time.Now(),
+		})
+		if err != nil {
+			return nil, err
+		}
+	}
 	return &accountsvc.InsertLogResp{}, nil
 }

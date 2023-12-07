@@ -12,5 +12,5 @@ type Account struct {
 }
 
 func (t Account) Table() string {
-	return "t_sms_account"
+	return "t_account"
 }

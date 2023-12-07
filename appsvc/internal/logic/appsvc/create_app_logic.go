@@ -1,7 +1,8 @@
-package logic
+package appsvclogic
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/aheadIV/NightVoyager/appsvc/internal/svc"
@@ -27,17 +28,20 @@ func NewCreateAppLogic(ctx context.Context, svcCtx *svc.ServiceContext) *CreateA
 }
 
 func (l *CreateAppLogic) CreateApp(in *appsvc.CreateAppReq) (*appsvc.CreateAppResp, error) {
-	// todo: add your logic here and delete this line
-	secret := utils.CreateUid()
-	data := &model.AppInfo{
-		Secret:    secret,
-		Status:    1,
-		Remark:    "11",
-		UpdatedAt: time.Now(),
-		CreatedAt: time.Now(),
+	accountID := in.GetAccountId()
+	if in != nil && accountID > 0 {
+		app := model.App{
+			AccountID: int(accountID),
+			CreatedAt: time.Now(),
+			Status:    1,
+			Secret:    utils.CreateUid(),
+		}
+		fmt.Println(app)
+		err := l.svcCtx.DB.Insert(l.ctx, &app)
+		if err != nil {
+			return nil, err
+		}
+		return &appsvc.CreateAppResp{Id: int64(app.ID)}, nil
 	}
-	if err := l.svcCtx.DB.Insert(l.ctx, data); err != nil {
-		return nil, err
-	}
-	return &appsvc.CreateAppResp{Id: int64(data.ID), Secret: secret}, nil
+	return &appsvc.CreateAppResp{}, nil
 }

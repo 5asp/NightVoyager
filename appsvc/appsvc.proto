@@ -3,28 +3,54 @@ syntax = "proto3";
 package appsvc;
 option go_package="./appsvc";
 
-message GetAppReq {
+message App {
+  int64 app_id = 1;
+  string name = 2;
+  string secret = 3;
+  int32 status = 4;
+  string remark = 5;
+  int64 account_id = 6;
+  int64 created_at = 7;
+  int64 updated_at = 8;
+}
+message GetAppByIdReq {
   int64 app_id = 1;
 }
-
-message GetAppResp {
-  int64 app_id = 1;
-  string secret = 2;
-  int32 status = 3;
-  string remark = 4;
-  int64 created_at = 5;
-  int64 updated_at = 6;
+message GetAppByIdResp {
+  App data = 1;
 }
-
 message CreateAppReq {
-
+  int64 account_id = 1;
+  int64 service_id = 2;
+  string name = 3;
 }
 message CreateAppResp {
   int64 id  = 1;
-  string secret = 2;
+}
+message AppListReq {
+  int64 account_id = 1;
+  int64 status = 2;
+  int64 id =  3;
+  int64 created_lt = 4;
+  int64 created_gt = 5;
+  string name = 6;
+  int64 page =  7;
+  int64 page_size = 8;
+}
+message AppListResp {
+  repeated App list = 1;
+  int64 total = 2;
 }
 
 service Appsvc {
-  rpc GetApp(GetAppReq) returns(GetAppResp);
+  rpc GetAppById(GetAppByIdReq) returns(GetAppByIdResp);
   rpc CreateApp(CreateAppReq) returns(CreateAppResp);
+  rpc AppList(AppListReq) returns(AppListResp);
+}
+
+message Req{}
+message Resp{}
+service SendLogsvc {
+  rpc InsertLog(Req)returns(Resp);
+  rpc SendLogList(Req)returns(Resp);
 }

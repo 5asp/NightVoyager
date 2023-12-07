@@ -21,17 +21,22 @@ type LogResp struct {
 }
 
 type App struct {
-	Id   int64  `path:"id"`
-	Name string `json:"name"`
-	Age  int    `json:"age"`
+	Id        int    `json:"id"`
+	Secret    string `json:"secret"`
+	Status    int    `json:"status"`
+	Remark    string `json:"remark"`
+	CreatedAt int64  `json:"created_at"`
+	UpdatedAt int64  `json:"updated_at"`
+	AccountId int    `json:"account_id"`
 }
 
 type AppAddReq struct {
+	Name string `json:"name"`
 }
 
 type AppAddResp struct {
-	AppID  int64  `json:"appid"`
-	Secret string `json:"secret"`
+	AppID int64  `json:"appid"`
+	Err   string `json:"err,omitempty"`
 }
 
 type AppUdReq struct {

@@ -16,7 +16,6 @@ func NewServiceContext(c config.Config) *ServiceContext {
 	adapter, _ := postgres.Open(c.Postgres.DataSource)
 	// initialize rel's repo.
 	repo := rel.New(adapter)
-	// db :=
 	return &ServiceContext{
 		Config: c,
 		DB:     repo,

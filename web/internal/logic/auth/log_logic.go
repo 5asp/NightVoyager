@@ -2,6 +2,7 @@ package auth
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	"github.com/aheadIV/NightVoyager/accountsvc/types/accountsvc"
@@ -40,11 +41,12 @@ func (l *LogLogic) Log(req *types.LogReq) (resp *types.LogResp, err error) {
 	if !utils.CheckPassword(res.Data.Password, newPass) {
 		return &types.LogResp{Err: "非法帐号"}, nil
 	}
-
+	// ip := l.ctx.Value("X-Real-Ip")
+	// fmt.Println(ip)
 	_, err = l.svcCtx.AccountLogRPC.InsertLog(l.ctx, &accountsvc.InsertLogReq{Data: &accountsvc.AccountLog{
 		AccountId: accountData.Id,
-		CreatedAt: time.Now().Unix(),
-		IpAddr:    "",
+		IpAddr:    l.svcCtx.ClientIP,
+		Device:    l.svcCtx.Device,
 	}})
 	if err != nil {
 		return nil, err
@@ -52,7 +54,8 @@ func (l *LogLogic) Log(req *types.LogReq) (resp *types.LogResp, err error) {
 	var accessExpire = l.svcCtx.Config.Auth.AccessExpire
 	jwtMap := make(map[string]interface{}, 0)
 	jwtMap["account"] = accountData.Account
-	jwtMap["id"] = accountData.Id
+	jwtMap["account_id"] = accountData.Id
+	fmt.Println(accountData.Id)
 	now := time.Now().Unix()
 	accessToken, err := l.GenToken(now, l.svcCtx.Config.Auth.AccessSecret, jwtMap, accessExpire)
 	if err != nil {

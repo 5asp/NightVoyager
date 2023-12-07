@@ -5,7 +5,8 @@ import (
 	"fmt"
 
 	"github.com/aheadIV/NightVoyager/appsvc/internal/config"
-	"github.com/aheadIV/NightVoyager/appsvc/internal/server"
+	appsvcServer "github.com/aheadIV/NightVoyager/appsvc/internal/server/appsvc"
+	sendlogsvcServer "github.com/aheadIV/NightVoyager/appsvc/internal/server/sendlogsvc"
 	"github.com/aheadIV/NightVoyager/appsvc/internal/svc"
 	"github.com/aheadIV/NightVoyager/appsvc/types/appsvc"
 
@@ -26,7 +27,8 @@ func main() {
 	ctx := svc.NewServiceContext(c)
 
 	s := zrpc.MustNewServer(c.RpcServerConf, func(grpcServer *grpc.Server) {
-		appsvc.RegisterAppsvcServer(grpcServer, server.NewAppsvcServer(ctx))
+		appsvc.RegisterAppsvcServer(grpcServer, appsvcServer.NewAppsvcServer(ctx))
+		appsvc.RegisterSendLogsvcServer(grpcServer, sendlogsvcServer.NewSendLogsvcServer(ctx))
 
 		if c.Mode == service.DevMode || c.Mode == service.TestMode {
 			reflection.Register(grpcServer)

@@ -6,7 +6,7 @@ package server
 import (
 	"context"
 
-	"github.com/aheadIV/NightVoyager/appsvc/internal/logic"
+	"github.com/aheadIV/NightVoyager/appsvc/internal/logic/appsvc"
 	"github.com/aheadIV/NightVoyager/appsvc/internal/svc"
 	"github.com/aheadIV/NightVoyager/appsvc/types/appsvc"
 )
@@ -22,12 +22,17 @@ func NewAppsvcServer(svcCtx *svc.ServiceContext) *AppsvcServer {
 	}
 }
 
-func (s *AppsvcServer) GetApp(ctx context.Context, in *appsvc.GetAppReq) (*appsvc.GetAppResp, error) {
-	l := logic.NewGetAppLogic(ctx, s.svcCtx)
-	return l.GetApp(in)
+func (s *AppsvcServer) GetAppById(ctx context.Context, in *appsvc.GetAppByIdReq) (*appsvc.GetAppByIdResp, error) {
+	l := appsvclogic.NewGetAppByIdLogic(ctx, s.svcCtx)
+	return l.GetAppById(in)
 }
 
 func (s *AppsvcServer) CreateApp(ctx context.Context, in *appsvc.CreateAppReq) (*appsvc.CreateAppResp, error) {
-	l := logic.NewCreateAppLogic(ctx, s.svcCtx)
+	l := appsvclogic.NewCreateAppLogic(ctx, s.svcCtx)
 	return l.CreateApp(in)
+}
+
+func (s *AppsvcServer) AppList(ctx context.Context, in *appsvc.AppListReq) (*appsvc.AppListResp, error) {
+	l := appsvclogic.NewAppListLogic(ctx, s.svcCtx)
+	return l.AppList(in)
 }

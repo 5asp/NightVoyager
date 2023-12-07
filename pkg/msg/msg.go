@@ -1,7 +1,7 @@
 package msg
 
 var (
-	Success = "success"
-	Fail    = "fail"
-	Exists = "exists"
+	Success = "success."
+	Fail    = "fail."
+	Exists  = "exists."
 )

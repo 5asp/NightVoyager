@@ -2,6 +2,7 @@ package utils
 
 import (
 	"crypto/md5"
+	"encoding/hex"
 	"io"
 
 	"github.com/rs/xid"
@@ -12,5 +13,5 @@ func CreateUid() string {
 	h := md5.New()
 	io.WriteString(h, guid.String())
 
-	return string(h.Sum(nil))
+	return hex.EncodeToString(h.Sum(nil))
 }

@@ -19,16 +19,18 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Appsvc_GetApp_FullMethodName    = "/appsvc.Appsvc/GetApp"
-	Appsvc_CreateApp_FullMethodName = "/appsvc.Appsvc/CreateApp"
+	Appsvc_GetAppById_FullMethodName = "/appsvc.Appsvc/GetAppById"
+	Appsvc_CreateApp_FullMethodName  = "/appsvc.Appsvc/CreateApp"
+	Appsvc_AppList_FullMethodName    = "/appsvc.Appsvc/AppList"
 )
 
 // AppsvcClient is the client API for Appsvc service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AppsvcClient interface {
-	GetApp(ctx context.Context, in *GetAppReq, opts ...grpc.CallOption) (*GetAppResp, error)
+	GetAppById(ctx context.Context, in *GetAppByIdReq, opts ...grpc.CallOption) (*GetAppByIdResp, error)
 	CreateApp(ctx context.Context, in *CreateAppReq, opts ...grpc.CallOption) (*CreateAppResp, error)
+	AppList(ctx context.Context, in *AppListReq, opts ...grpc.CallOption) (*AppListResp, error)
 }
 
 type appsvcClient struct {
@@ -39,9 +41,9 @@ func NewAppsvcClient(cc grpc.ClientConnInterface) AppsvcClient {
 	return &appsvcClient{cc}
 }
 
-func (c *appsvcClient) GetApp(ctx context.Context, in *GetAppReq, opts ...grpc.CallOption) (*GetAppResp, error) {
-	out := new(GetAppResp)
-	err := c.cc.Invoke(ctx, Appsvc_GetApp_FullMethodName, in, out, opts...)
+func (c *appsvcClient) GetAppById(ctx context.Context, in *GetAppByIdReq, opts ...grpc.CallOption) (*GetAppByIdResp, error) {
+	out := new(GetAppByIdResp)
+	err := c.cc.Invoke(ctx, Appsvc_GetAppById_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -57,12 +59,22 @@ func (c *appsvcClient) CreateApp(ctx context.Context, in *CreateAppReq, opts ...
 	return out, nil
 }
 
+func (c *appsvcClient) AppList(ctx context.Context, in *AppListReq, opts ...grpc.CallOption) (*AppListResp, error) {
+	out := new(AppListResp)
+	err := c.cc.Invoke(ctx, Appsvc_AppList_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AppsvcServer is the server API for Appsvc service.
 // All implementations must embed UnimplementedAppsvcServer
 // for forward compatibility
 type AppsvcServer interface {
-	GetApp(context.Context, *GetAppReq) (*GetAppResp, error)
+	GetAppById(context.Context, *GetAppByIdReq) (*GetAppByIdResp, error)
 	CreateApp(context.Context, *CreateAppReq) (*CreateAppResp, error)
+	AppList(context.Context, *AppListReq) (*AppListResp, error)
 	mustEmbedUnimplementedAppsvcServer()
 }
 
@@ -70,11 +82,14 @@ type AppsvcServer interface {
 type UnimplementedAppsvcServer struct {
 }
 
-func (UnimplementedAppsvcServer) GetApp(context.Context, *GetAppReq) (*GetAppResp, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetApp not implemented")
+func (UnimplementedAppsvcServer) GetAppById(context.Context, *GetAppByIdReq) (*GetAppByIdResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetAppById not implemented")
 }
 func (UnimplementedAppsvcServer) CreateApp(context.Context, *CreateAppReq) (*CreateAppResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateApp not implemented")
+}
+func (UnimplementedAppsvcServer) AppList(context.Context, *AppListReq) (*AppListResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method AppList not implemented")
 }
 func (UnimplementedAppsvcServer) mustEmbedUnimplementedAppsvcServer() {}
 
@@ -89,20 +104,20 @@ func RegisterAppsvcServer(s grpc.ServiceRegistrar, srv AppsvcServer) {
 	s.RegisterService(&Appsvc_ServiceDesc, srv)
 }
 
-func _Appsvc_GetApp_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetAppReq)
+func _Appsvc_GetAppById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetAppByIdReq)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(AppsvcServer).GetApp(ctx, in)
+		return srv.(AppsvcServer).GetAppById(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: Appsvc_GetApp_FullMethodName,
+		FullMethod: Appsvc_GetAppById_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(AppsvcServer).GetApp(ctx, req.(*GetAppReq))
+		return srv.(AppsvcServer).GetAppById(ctx, req.(*GetAppByIdReq))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -125,6 +140,24 @@ func _Appsvc_CreateApp_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Appsvc_AppList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AppListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AppsvcServer).AppList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Appsvc_AppList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AppsvcServer).AppList(ctx, req.(*AppListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // Appsvc_ServiceDesc is the grpc.ServiceDesc for Appsvc service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -133,12 +166,143 @@ var Appsvc_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*AppsvcServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetApp",
-			Handler:    _Appsvc_GetApp_Handler,
+			MethodName: "GetAppById",
+			Handler:    _Appsvc_GetAppById_Handler,
 		},
 		{
 			MethodName: "CreateApp",
 			Handler:    _Appsvc_CreateApp_Handler,
+		},
+		{
+			MethodName: "AppList",
+			Handler:    _Appsvc_AppList_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "appsvc.proto",
+}
+
+const (
+	SendLogsvc_InsertLog_FullMethodName   = "/appsvc.SendLogsvc/InsertLog"
+	SendLogsvc_SendLogList_FullMethodName = "/appsvc.SendLogsvc/SendLogList"
+)
+
+// SendLogsvcClient is the client API for SendLogsvc service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type SendLogsvcClient interface {
+	InsertLog(ctx context.Context, in *Req, opts ...grpc.CallOption) (*Resp, error)
+	SendLogList(ctx context.Context, in *Req, opts ...grpc.CallOption) (*Resp, error)
+}
+
+type sendLogsvcClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewSendLogsvcClient(cc grpc.ClientConnInterface) SendLogsvcClient {
+	return &sendLogsvcClient{cc}
+}
+
+func (c *sendLogsvcClient) InsertLog(ctx context.Context, in *Req, opts ...grpc.CallOption) (*Resp, error) {
+	out := new(Resp)
+	err := c.cc.Invoke(ctx, SendLogsvc_InsertLog_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *sendLogsvcClient) SendLogList(ctx context.Context, in *Req, opts ...grpc.CallOption) (*Resp, error) {
+	out := new(Resp)
+	err := c.cc.Invoke(ctx, SendLogsvc_SendLogList_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// SendLogsvcServer is the server API for SendLogsvc service.
+// All implementations must embed UnimplementedSendLogsvcServer
+// for forward compatibility
+type SendLogsvcServer interface {
+	InsertLog(context.Context, *Req) (*Resp, error)
+	SendLogList(context.Context, *Req) (*Resp, error)
+	mustEmbedUnimplementedSendLogsvcServer()
+}
+
+// UnimplementedSendLogsvcServer must be embedded to have forward compatible implementations.
+type UnimplementedSendLogsvcServer struct {
+}
+
+func (UnimplementedSendLogsvcServer) InsertLog(context.Context, *Req) (*Resp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method InsertLog not implemented")
+}
+func (UnimplementedSendLogsvcServer) SendLogList(context.Context, *Req) (*Resp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SendLogList not implemented")
+}
+func (UnimplementedSendLogsvcServer) mustEmbedUnimplementedSendLogsvcServer() {}
+
+// UnsafeSendLogsvcServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to SendLogsvcServer will
+// result in compilation errors.
+type UnsafeSendLogsvcServer interface {
+	mustEmbedUnimplementedSendLogsvcServer()
+}
+
+func RegisterSendLogsvcServer(s grpc.ServiceRegistrar, srv SendLogsvcServer) {
+	s.RegisterService(&SendLogsvc_ServiceDesc, srv)
+}
+
+func _SendLogsvc_InsertLog_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Req)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SendLogsvcServer).InsertLog(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SendLogsvc_InsertLog_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SendLogsvcServer).InsertLog(ctx, req.(*Req))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SendLogsvc_SendLogList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Req)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SendLogsvcServer).SendLogList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: SendLogsvc_SendLogList_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SendLogsvcServer).SendLogList(ctx, req.(*Req))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// SendLogsvc_ServiceDesc is the grpc.ServiceDesc for SendLogsvc service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var SendLogsvc_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "appsvc.SendLogsvc",
+	HandlerType: (*SendLogsvcServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "InsertLog",
+			Handler:    _SendLogsvc_InsertLog_Handler,
+		},
+		{
+			MethodName: "SendLogList",
+			Handler:    _SendLogsvc_SendLogList_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

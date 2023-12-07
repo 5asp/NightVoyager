@@ -18,6 +18,8 @@ func LogHandler(svcCtx *svc.ServiceContext) http.HandlerFunc {
 			return
 		}
 
+		svcCtx.ClientIP = r.RemoteAddr
+		svcCtx.Device = r.UserAgent()
 		l := auth.NewLogLogic(r.Context(), svcCtx)
 		resp, err := l.Log(&req)
 		if err != nil {

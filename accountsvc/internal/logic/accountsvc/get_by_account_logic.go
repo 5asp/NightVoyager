@@ -30,7 +30,7 @@ func NewGetByAccountLogic(ctx context.Context, svcCtx *svc.ServiceContext) *GetB
 func (l *GetByAccountLogic) GetByAccount(in *accountsvc.GetByAccountReq) (*accountsvc.GetByAccountResp, error) {
 	var account model.Account
 	if in != nil && in.Account != "" {
-		query := rel.Select("account", "password").Where(where.Eq("account", in.Account))
+		query := rel.Select("account", "password", "id").Where(where.Eq("account", in.Account))
 		if err := l.svcCtx.DB.Find(l.ctx, &account, query); err != nil {
 			if !errors.Is(err, rel.ErrNotFound) {
 				return nil, err
