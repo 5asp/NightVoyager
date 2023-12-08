@@ -55,6 +55,16 @@ service SendLogsvc {
   rpc SendLogList(Req)returns(Resp);
 }
 
+message Channel {
+  int64 id =  1;
+  string  channel_name = 2;
+  string  channel_type  = 3;
+  string  channel_appkey  = 3;
+  string  channel_appsecret  = 3;
+  string  channel_type  = 3;
+  string  channel_type  = 3;
+
+}
 message ChannelListReq {}
 message ChannelListResp{}
 message CreateChannelReq {}

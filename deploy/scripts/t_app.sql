@@ -21,10 +21,10 @@ CREATE TABLE public.t_app (
 	secret varchar NULL, -- 应用密钥
 	status int4 NULL, -- 应用状态
 	remark varchar NULL,
-	created_at timestamptz NULL,
-	updated_at timestamptz NULL,
 	account_id int4 NOT NULL DEFAULT 0,
 	"name" varchar NULL, -- 应用名称
+	created_at timestamptz NULL,
+	updated_at timestamptz NULL,
 	CONSTRAINT t_app_pkey PRIMARY KEY (id)
 );
 
@@ -33,4 +33,3 @@ CREATE TABLE public.t_app (
 COMMENT ON COLUMN public.t_app.secret IS '应用密钥';
 COMMENT ON COLUMN public.t_app.status IS '应用状态';
 COMMENT ON COLUMN public.t_app."name" IS '应用名称';
-

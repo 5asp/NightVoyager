@@ -3,6 +3,20 @@ syntax = "proto3";
 package tplsvc;
 option go_package="./tplsvc";
 
+
+message Tpl {
+  int64 id = 1;
+  string tpl_name = 2;
+  string tpl_content  = 3;
+  string tpl_type = 4;
+  int64 sign_id = 5;
+  int64 account_id  = 6;
+  int64 status = 7;
+  string  remark  = 8;
+  int64 created_at  = 9;
+  int64 updated_at  = 10;
+}
+
 message GetTplByIdReq {
   int64 id = 1;
 }
@@ -19,14 +33,17 @@ message CreateTplResp {
   string pong = 1;
 }
 
-service Tplsvc {
+service TplSvc {
   rpc GetById(GetTplByIdReq) returns(GetTplByIdResp);
-  rpc Create(CreateReq) returns(CreateResp);
-  rpc Update(UpdateReq) returns(UpdateResp);
-  rpc Delete(DeleteReq) returns(DeleteResp);
-  rpc List(DeleteReq) returns(DeleteResp);
+  rpc CreateTpl(CreateTplReq) returns(CreateTplResp);
+  rpc UpdateTpl(UpdateReq) returns(UpdateResp);
+  rpc DeleteTpl(DeleteReq) returns(DeleteResp);
+  rpc TplList(DeleteReq) returns(DeleteResp);
 }
 
+message Sign {
+
+}
 message GetSigByIdReq {
   string ping = 1;
 }
@@ -34,11 +51,25 @@ message GetSigByIdResp {
   string pong = 1;
 }
 
-service TplSignsvc {
-  rpc GetById(GetSigByIdReq) returns(GetSigByIdResp);
-  rpc Create(CreateReq) returns(CreateResp);
-  rpc Update(UpdateReq) returns(UpdateResp);
-  rpc Delete(DeleteReq) returns(DeleteResp);
-  rpc List(DeleteReq) returns(DeleteResp);
+service TplSignSvc {
+  rpc GetSigById(GetSigByIdReq) returns(GetSigByIdResp);
+  rpc CreateSig(CreateReq) returns(CreateResp);
+  rpc UpdateSig(UpdateReq) returns(UpdateResp);
+  rpc DeleteSig(DeleteReq) returns(DeleteResp);
+  rpc SigList(DeleteReq) returns(DeleteResp);
 }
- 
+
+message Rec {
+
+}
+
+message CreateRecReq {
+  string ping = 1;
+}
+message CreateRecResp {
+  string pong = 1;
+}
+
+service TplSendSvc {
+  rpc CreateRec(CreateRecReq) returns(CreateRecResp);
+}
