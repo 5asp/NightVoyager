@@ -4,7 +4,7 @@ import "time"
 
 type TemplateSign struct {
 	ID        int       `db:"id,primary"`
-	SignName  string    `db"sign_name"`
+	Signature string    `db"signature"`
 	IsDefault int       `db:"is_default"`
 	AccountID int       `db:"account_id"`
 	Status    int       `db:"status"`

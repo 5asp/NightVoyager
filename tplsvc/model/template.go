@@ -4,7 +4,6 @@ import "time"
 
 type Template struct {
 	ID         int       `db:"id,primary"`
-	TplName    string    `db"tpl_name"`
 	TplContent string    `db:"tpl_content"`
 	TplType    string    `db:"tpl_type"`
 	SignID     int       `db:"sign_id"`

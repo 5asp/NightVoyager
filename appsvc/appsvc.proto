@@ -24,6 +24,7 @@ message CreateAppReq {
   int64 service_id = 2;
   string name = 3;
 }
+
 message CreateAppResp {
   int64 id  = 1;
 }
@@ -61,7 +62,7 @@ message Channel {
   string  channel_type  = 3;
   string  channel_appkey  = 3;
   string  channel_appsecret  = 3;
-  string  channel_type  = 3;
+  string  channel_  = 3;
   string  channel_type  = 3;
 
 }

@@ -14,7 +14,7 @@ CREATE SEQUENCE public.t_template_sign_seq
 
 CREATE TABLE public.t_template_sign (
 	id regclass NOT NULL DEFAULT nextval('t_template_sign_seq'::regclass),
-	sign_name varchar NOT NULL,
+	signature varchar NOT NULL,
 	is_default int4 NULL DEFAULT 0,
 	status int4 NULL DEFAULT 1,
 	created_at timestamptz NULL,
