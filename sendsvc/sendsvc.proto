@@ -5,7 +5,7 @@ option go_package="./sendsvc";
 
 
 message Tpl {
-  string id = 1;
+  int64 id = 1;
   string tpl_name = 2;
   string tpl_content  = 3;
   string tpl_type = 4;
@@ -15,10 +15,11 @@ message Tpl {
   string  remark  = 8;
   int64 created_at  = 9;
   int64 updated_at  = 10;
+  int64 queue_id  = 11;
 }
 
 message GetTplByIdReq {
-  string id = 1;
+  int64 id = 1;
 }
 message GetTplByIdResp {
   Tpl item = 1;
@@ -30,7 +31,7 @@ message CreateTplReq {
   string  content = 3;
 }
 message CreateTplResp {
-  string tpl_id = 1;
+  int64 tpl_id = 1;
   string  err = 2;
 }
 message TplListReq {
@@ -48,16 +49,16 @@ message TplListResp {
   int32 total = 2;
 }
 message UpdateTplReq {
-  string  tpl_id = 1;
+  int64  tpl_id = 1;
   int64 sign_id = 2;
   string  tpl_content = 3;
 }
 message UpdateTplResp {
-  string  tpl_id = 1;
+  int64  tpl_id = 1;
   string  err = 2;
 }
 message DeleteTplReq {
-  string  tpl_id = 1;
+  int64  tpl_id = 1;
 }
 message DeletTplResp {
   string err = 1;
@@ -137,6 +138,7 @@ message Rec {
   string  sender_ip = 10;
   int64 created_at  = 11;
   int64 updated_at  = 12;
+  string queue_id  = 13;
 }
 
 message CreateRecReq {

@@ -1,14 +1,85 @@
 syntax = "v1"
-
-type Request {
-	Name string `path:"name,options=you|me"`
-}
-
-type Response {
-	Message string `json:"message"`
-}
-
+info (
+	title:   "api send"
+	desc:    "user send"
+	author:  "xiaxuejin"
+	version: "v1"
+	email: "ahead4@duck.com"
+)
+type (
+	GroupSendResp {
+		List []SendResp
+	}
+	Item {
+		To   string `json:"to"`
+		Vars string `json:"vars"`
+	}
+	SendReq {
+		AppId   int64  `json:"appid"`
+		To      string `json:"to"`
+		Content string `json:"content"`
+		Secret  string `json:"secret"`
+	}
+	SendResp {
+		Status string `json:"status"`
+		SendId string `json:"send_id"`
+		Fee    int32  `json:"fee"`
+	}
+	XsendReq {
+		AppId   int64  `json:"appid"`
+		To      string `json:"to"`
+		Secret  string `json:"secret"`
+		Project string `json:"project"`
+	}
+	GroupSendReq {
+		AppId   int64  `json:"appid"`
+		Content string `json:"content"`
+		Secret  string `json:"secret"`
+		Params  []Item `json:"param"`
+	}
+	GroupXsendReq {
+		AppId   int64  `json:"appid"`
+		Secret  string `json:"secret"`
+		Project string `json:"project"`
+		Params  []Item `json:"param"`
+	}
+) 
+type (
+	Req        struct{}
+	StatusResp {
+		Status  string `json:"status"`
+		Runtime int64  `json:"runtime"`
+	}
+	TimestampResp {
+		Timestamp int64 `json:"timestamp"`
+	}
+)
+@server (
+	prefix: /v1
+	group:  globalsms
+	maxBytes:   1048576
+)
 service send-api {
 	@handler SendHandler
-	post /from/:name(Request) returns (Response)
+	//globalsms/send提供强大的短信发送功能,根据提交的短信签名和内容,自动创建模板并发送。
+	post /send(SendReq) returns (SendResp)
+	@handler SendTplHandler
+	post /xsend(XsendReq) returns (SendResp)
+	@handler SendGroupHandler
+	post /group/send(GroupSendReq) returns (GroupSendResp)
+	@handler SendGroupTplHandler
+	post /group/xsend(GroupXsendReq) returns (GroupSendResp)
+}
+
+@server (
+	prefix: /v1
+	group:  service
+	maxBytes:   1048576
+)
+
+service send-api {
+	@handler StatusHandler
+	post /status(Req) returns (StatusResp)
+	@handler TimestampHandler
+	post /timestamp(Req) returns (TimestampResp)
 }

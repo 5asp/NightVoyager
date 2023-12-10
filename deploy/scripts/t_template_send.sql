@@ -1,5 +1,15 @@
+-- public.t_template definition
+CREATE SEQUENCE public.t_template_send_seq
+	INCREMENT BY 1
+	MINVALUE 1
+	MAXVALUE 9223372036854775807
+	START 1
+	CACHE 1
+	NO CYCLE;
+	
 CREATE TABLE public.t_template_send (
-	id varchar NOT NULL, -- 主键ID
+	id regclass NOT NULL DEFAULT nextval('t_template_send_seq'::regclass),
+	queue_id varchar NULL,
 	mobile text NULL,
 	nationcode varchar NULL,
 	app_id int4 NULL, -- 应用ID

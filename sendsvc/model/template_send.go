@@ -3,7 +3,8 @@ package model
 import "time"
 
 type TemplateSend struct {
-	ID            int       `db:"id,primary"`
+	ID            int64     `db:"id,primary"`
+	QueueID       string    `db:"queue_id"`
 	Mobile        string    `db:"mobile"`
 	NationCode    string    `db:"nationcode"`
 	AppID         int       `db:"app_id"`

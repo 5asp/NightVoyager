@@ -27,7 +27,7 @@ func NewCreateRecLogic(ctx context.Context, svcCtx *svc.ServiceContext) *CreateR
 
 func (l *CreateRecLogic) CreateRec(in *sendsvc.CreateRecReq) (*sendsvc.CreateRecResp, error) {
 	if in != nil {
-		tpl := &model.TemplateSend{
+		send := &model.TemplateSend{
 			Mobile:        in.GetMobile(),
 			NationCode:    in.GetNationcode(),
 			AppID:         int(in.GetAppId()),
@@ -36,11 +36,11 @@ func (l *CreateRecLogic) CreateRec(in *sendsvc.CreateRecReq) (*sendsvc.CreateRec
 			SenderIP:      in.GetSenderIp(),
 			CreatedAt:     time.Now(),
 		}
-		err := l.svcCtx.DB.Insert(l.ctx, tpl)
+		err := l.svcCtx.DB.Insert(l.ctx, send)
 		if err != nil {
 			return nil, err
 		}
-		return &sendsvc.CreateRecResp{}, nil
+		return &sendsvc.CreateRecResp{Id: send.ID}, nil
 	}
 
 	return &sendsvc.CreateRecResp{}, nil

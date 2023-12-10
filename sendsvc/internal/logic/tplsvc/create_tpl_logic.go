@@ -34,7 +34,7 @@ func (l *CreateTplLogic) CreateTpl(in *sendsvc.CreateTplReq) (*sendsvc.CreateTpl
 			AccountID:  int(in.GetAccountId()),
 			SignID:     int(in.GetSignId()),
 			TplContent: in.GetContent(),
-			ID:         utils.CreateID(),
+			QueueID:    utils.CreateID(),
 		}
 		err := l.svcCtx.DB.Insert(l.ctx, tpl)
 		if err != nil {

@@ -3,7 +3,8 @@ package model
 import "time"
 
 type Template struct {
-	ID         string    `db:"id,primary"`
+	ID         int64     `db:"id,primary"`
+	QueueID    string    `db:"queue_id"`
 	TplContent string    `db:"tpl_content"`
 	TplType    string    `db:"tpl_type"`
 	SignID     int       `db:"sign_id"`
