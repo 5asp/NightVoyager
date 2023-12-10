@@ -3,6 +3,6 @@ ListenOn: 0.0.0.0:8083
 Etcd:
   Hosts:
   - 127.0.0.1:2379
-  Key: tplsvc.rpc
+  Key: sendsvc.rpc
 Postgres:
   DataSource: postgresql://aheadIV:oXnwUedJ47RI@ep-summer-tree-57217189-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require

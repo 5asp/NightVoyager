@@ -13,6 +13,18 @@ AppRPC:
   Endpoints:
   - 127.0.0.1:8081
   NonBlock: true
+TplSendRPC:
+  Endpoints:
+  - 127.0.0.1:8083
+  NonBlock: true
+TplSignRPC:
+  Endpoints:
+  - 127.0.0.1:8083
+  NonBlock: true 
+TplRPC:
+  Endpoints:
+  - 127.0.0.1:8083
+  NonBlock: true 
 Auth:
   AccessSecret: generationexists
   AccessExpire: 1300000
