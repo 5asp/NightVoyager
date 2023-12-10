@@ -15,3 +15,11 @@ func CreateUid() string {
 
 	return hex.EncodeToString(h.Sum(nil))
 }
+
+func CreateID() string {
+	guid := xid.New()
+	h := md5.New()
+	io.WriteString(h, guid.String())
+
+	return hex.EncodeToString(h.Sum(nil))
+}

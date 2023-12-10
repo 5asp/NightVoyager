@@ -8,7 +8,7 @@ type TemplateSend struct {
 	NationCode    string    `db:"nationcode"`
 	AppID         int       `db:"app_id"`
 	TemplateType  string    `db:"t_template_type"`
-	TemplateID    int       `db:"template_id"`
+	TemplateID    string    `db:"template_id"`
 	TemplateParam string    `db:"template_param"`
 	SendAt        string    `db:"send_at"`
 	SendStatus    int       `db:"send_status"`

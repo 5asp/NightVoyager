@@ -10,5 +10,5 @@ type Response {
 
 service send-api {
 	@handler SendHandler
-	get /from/:name(Request) returns (Response)
+	post /from/:name(Request) returns (Response)
 }

@@ -3,7 +3,7 @@ package model
 import "time"
 
 type Template struct {
-	ID         int       `db:"id,primary"`
+	ID         string    `db:"id,primary"`
 	TplContent string    `db:"tpl_content"`
 	TplType    string    `db:"tpl_type"`
 	SignID     int       `db:"sign_id"`

@@ -2,8 +2,10 @@ package tplsignsvclogic
 
 import (
 	"context"
+	"time"
 
 	"github.com/aheadIV/NightVoyager/sendsvc/internal/svc"
+	"github.com/aheadIV/NightVoyager/sendsvc/model"
 	"github.com/aheadIV/NightVoyager/sendsvc/types/sendsvc"
 
 	"github.com/zeromicro/go-zero/core/logx"
@@ -24,7 +26,18 @@ func NewCreateSigLogic(ctx context.Context, svcCtx *svc.ServiceContext) *CreateS
 }
 
 func (l *CreateSigLogic) CreateSig(in *sendsvc.CreateSigReq) (*sendsvc.CreateSigResp, error) {
-	// todo: add your logic here and delete this line
-
+	if in != nil {
+		sig := &model.TemplateSign{
+			Status:    1,
+			CreatedAt: time.Now(),
+			Signature: in.GetSignature(),
+			AccountID: int(in.GetAccountId()),
+		}
+		err := l.svcCtx.DB.Insert(l.ctx, sig)
+		if err != nil {
+			return nil, err
+		}
+		return &sendsvc.CreateSigResp{Id: int64(sig.ID)}, nil
+	}
 	return &sendsvc.CreateSigResp{}, nil
 }
