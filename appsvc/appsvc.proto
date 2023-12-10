@@ -60,17 +60,41 @@ message Channel {
   int64 id =  1;
   string  channel_name = 2;
   string  channel_type  = 3;
-  string  channel_appkey  = 3;
-  string  channel_appsecret  = 3;
-  string  channel_  = 3;
-  string  channel_type  = 3;
-
+  string  channel_key  = 4;
+  string  channel_secret  = 5;
+  string  channel_domain  = 6;
+  string  ext_properties  = 7;
+  string  status  = 8;
+  string  send_order  = 9;
+  int64 created_at = 10;
+  int64 updated_at = 11;
+  int64 quota = 12;
+  int64 is_default = 13;
 }
+
 message ChannelListReq {}
-message ChannelListResp{}
-message CreateChannelReq {}
-message CreateChannelResp {}
+message ChannelListResp{
+  repeated Channel list = 1;
+  int64 total = 2;
+}
+message GetChannelByIdReq {
+  int64 app_id = 1;
+}
+message GetChannelByIdResp {
+  Channel data = 1;
+}
+message CreateChannelReq {
+  string name = 1;
+  string app_id = 2;
+  string secret = 3;
+  string gateway = 4;
+  int32 is_default=5;
+}
+message CreateChannelResp {
+  int64 id = 1;
+}
 service AppChannel {
   rpc CreateChannel(CreateChannelReq) returns (CreateChannelResp);
+  rpc GetChannelById(GetChannelByIdReq) returns (GetChannelByIdResp);
   rpc ChannelList(ChannelListReq) returns(ChannelListResp);
 }

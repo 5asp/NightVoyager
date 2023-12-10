@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/aheadIV/NightVoyager/appsvc/internal/config"
+	appchannelServer "github.com/aheadIV/NightVoyager/appsvc/internal/server/appchannel"
 	appsvcServer "github.com/aheadIV/NightVoyager/appsvc/internal/server/appsvc"
 	sendlogsvcServer "github.com/aheadIV/NightVoyager/appsvc/internal/server/sendlogsvc"
 	"github.com/aheadIV/NightVoyager/appsvc/internal/svc"
@@ -29,6 +30,7 @@ func main() {
 	s := zrpc.MustNewServer(c.RpcServerConf, func(grpcServer *grpc.Server) {
 		appsvc.RegisterAppsvcServer(grpcServer, appsvcServer.NewAppsvcServer(ctx))
 		appsvc.RegisterSendLogsvcServer(grpcServer, sendlogsvcServer.NewSendLogsvcServer(ctx))
+		appsvc.RegisterAppChannelServer(grpcServer, appchannelServer.NewAppChannelServer(ctx))
 
 		if c.Mode == service.DevMode || c.Mode == service.TestMode {
 			reflection.Register(grpcServer)

@@ -297,3 +297,161 @@ var SendLogsvc_ServiceDesc = grpc.ServiceDesc{
 	Streams:  []grpc.StreamDesc{},
 	Metadata: "appsvc.proto",
 }
+
+// AppChannelClient is the client API for AppChannel service.
+//
+// For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
+type AppChannelClient interface {
+	CreateChannel(ctx context.Context, in *CreateChannelReq, opts ...grpc.CallOption) (*CreateChannelResp, error)
+	GetChannelById(ctx context.Context, in *GetChannelByIdReq, opts ...grpc.CallOption) (*GetChannelByIdResp, error)
+	ChannelList(ctx context.Context, in *ChannelListReq, opts ...grpc.CallOption) (*ChannelListResp, error)
+}
+
+type appChannelClient struct {
+	cc grpc.ClientConnInterface
+}
+
+func NewAppChannelClient(cc grpc.ClientConnInterface) AppChannelClient {
+	return &appChannelClient{cc}
+}
+
+func (c *appChannelClient) CreateChannel(ctx context.Context, in *CreateChannelReq, opts ...grpc.CallOption) (*CreateChannelResp, error) {
+	out := new(CreateChannelResp)
+	err := c.cc.Invoke(ctx, "/appsvc.AppChannel/CreateChannel", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *appChannelClient) GetChannelById(ctx context.Context, in *GetChannelByIdReq, opts ...grpc.CallOption) (*GetChannelByIdResp, error) {
+	out := new(GetChannelByIdResp)
+	err := c.cc.Invoke(ctx, "/appsvc.AppChannel/GetChannelById", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *appChannelClient) ChannelList(ctx context.Context, in *ChannelListReq, opts ...grpc.CallOption) (*ChannelListResp, error) {
+	out := new(ChannelListResp)
+	err := c.cc.Invoke(ctx, "/appsvc.AppChannel/ChannelList", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+// AppChannelServer is the server API for AppChannel service.
+// All implementations must embed UnimplementedAppChannelServer
+// for forward compatibility
+type AppChannelServer interface {
+	CreateChannel(context.Context, *CreateChannelReq) (*CreateChannelResp, error)
+	GetChannelById(context.Context, *GetChannelByIdReq) (*GetChannelByIdResp, error)
+	ChannelList(context.Context, *ChannelListReq) (*ChannelListResp, error)
+	mustEmbedUnimplementedAppChannelServer()
+}
+
+// UnimplementedAppChannelServer must be embedded to have forward compatible implementations.
+type UnimplementedAppChannelServer struct {
+}
+
+func (UnimplementedAppChannelServer) CreateChannel(context.Context, *CreateChannelReq) (*CreateChannelResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CreateChannel not implemented")
+}
+func (UnimplementedAppChannelServer) GetChannelById(context.Context, *GetChannelByIdReq) (*GetChannelByIdResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method GetChannelById not implemented")
+}
+func (UnimplementedAppChannelServer) ChannelList(context.Context, *ChannelListReq) (*ChannelListResp, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ChannelList not implemented")
+}
+func (UnimplementedAppChannelServer) mustEmbedUnimplementedAppChannelServer() {}
+
+// UnsafeAppChannelServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to AppChannelServer will
+// result in compilation errors.
+type UnsafeAppChannelServer interface {
+	mustEmbedUnimplementedAppChannelServer()
+}
+
+func RegisterAppChannelServer(s grpc.ServiceRegistrar, srv AppChannelServer) {
+	s.RegisterService(&AppChannel_ServiceDesc, srv)
+}
+
+func _AppChannel_CreateChannel_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateChannelReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AppChannelServer).CreateChannel(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/appsvc.AppChannel/CreateChannel",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AppChannelServer).CreateChannel(ctx, req.(*CreateChannelReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AppChannel_GetChannelById_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetChannelByIdReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AppChannelServer).GetChannelById(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/appsvc.AppChannel/GetChannelById",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AppChannelServer).GetChannelById(ctx, req.(*GetChannelByIdReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _AppChannel_ChannelList_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ChannelListReq)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AppChannelServer).ChannelList(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/appsvc.AppChannel/ChannelList",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AppChannelServer).ChannelList(ctx, req.(*ChannelListReq))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+// AppChannel_ServiceDesc is the grpc.ServiceDesc for AppChannel service.
+// It's only intended for direct use with grpc.RegisterService,
+// and not to be introspected or modified (even as a copy)
+var AppChannel_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "appsvc.AppChannel",
+	HandlerType: (*AppChannelServer)(nil),
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "CreateChannel",
+			Handler:    _AppChannel_CreateChannel_Handler,
+		},
+		{
+			MethodName: "GetChannelById",
+			Handler:    _AppChannel_GetChannelById_Handler,
+		},
+		{
+			MethodName: "ChannelList",
+			Handler:    _AppChannel_ChannelList_Handler,
+		},
+	},
+	Streams:  []grpc.StreamDesc{},
+	Metadata: "appsvc.proto",
+}

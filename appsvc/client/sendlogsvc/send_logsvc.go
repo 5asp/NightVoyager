@@ -13,15 +13,22 @@ import (
 )
 
 type (
-	App            = appsvc.App
-	AppListReq     = appsvc.AppListReq
-	AppListResp    = appsvc.AppListResp
-	CreateAppReq   = appsvc.CreateAppReq
-	CreateAppResp  = appsvc.CreateAppResp
-	GetAppByIdReq  = appsvc.GetAppByIdReq
-	GetAppByIdResp = appsvc.GetAppByIdResp
-	Req            = appsvc.Req
-	Resp           = appsvc.Resp
+	App                = appsvc.App
+	AppListReq         = appsvc.AppListReq
+	AppListResp        = appsvc.AppListResp
+	Channel            = appsvc.Channel
+	ChannelListReq     = appsvc.ChannelListReq
+	ChannelListResp    = appsvc.ChannelListResp
+	CreateAppReq       = appsvc.CreateAppReq
+	CreateAppResp      = appsvc.CreateAppResp
+	CreateChannelReq   = appsvc.CreateChannelReq
+	CreateChannelResp  = appsvc.CreateChannelResp
+	GetAppByIdReq      = appsvc.GetAppByIdReq
+	GetAppByIdResp     = appsvc.GetAppByIdResp
+	GetChannelByIdReq  = appsvc.GetChannelByIdReq
+	GetChannelByIdResp = appsvc.GetChannelByIdResp
+	Req                = appsvc.Req
+	Resp               = appsvc.Resp
 
 	SendLogsvc interface {
 		InsertLog(ctx context.Context, in *Req, opts ...grpc.CallOption) (*Resp, error)
