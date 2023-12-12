@@ -1,3 +1,15 @@
 Name: send-api
 Host: 0.0.0.0
 Port: 8888
+TplSendRPC:
+  Endpoints:
+  - 127.0.0.1:8083
+  NonBlock: true
+TplSignRPC:
+  Endpoints:
+  - 127.0.0.1:8083
+  NonBlock: true
+TplRPC:
+  Endpoints:
+  - 127.0.0.1:8083
+  NonBlock: true

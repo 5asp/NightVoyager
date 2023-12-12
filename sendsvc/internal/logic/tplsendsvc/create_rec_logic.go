@@ -4,6 +4,7 @@ import (
 	"context"
 	"time"
 
+	"github.com/aheadIV/NightVoyager/pkg/utils"
 	"github.com/aheadIV/NightVoyager/sendsvc/internal/svc"
 	"github.com/aheadIV/NightVoyager/sendsvc/model"
 	"github.com/aheadIV/NightVoyager/sendsvc/types/sendsvc"
@@ -35,6 +36,7 @@ func (l *CreateRecLogic) CreateRec(in *sendsvc.CreateRecReq) (*sendsvc.CreateRec
 			TemplateParam: in.GetTplParam(),
 			SenderIP:      in.GetSenderIp(),
 			CreatedAt:     time.Now(),
+			QueueID:       utils.CreateID(),
 		}
 		err := l.svcCtx.DB.Insert(l.ctx, send)
 		if err != nil {

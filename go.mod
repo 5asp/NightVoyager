@@ -3,6 +3,7 @@ module github.com/aheadIV/NightVoyager
 go 1.20
 
 require (
+	github.com/fiorix/go-smpp/v2 v2.0.0-20210507124410-a82a321cf1d8
 	github.com/go-rel/postgres v0.11.0
 	github.com/go-rel/rel v0.41.0
 	github.com/golang-jwt/jwt v3.2.2+incompatible
@@ -26,6 +27,7 @@ require (
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
 	github.com/emicklei/go-restful/v3 v3.9.0 // indirect
 	github.com/fatih/color v1.15.0 // indirect
+	github.com/fiorix/go-smpp v0.0.0-20210403173735-2894b96e70ba // indirect
 	github.com/go-logr/logr v1.2.4 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/go-openapi/jsonpointer v0.19.6 // indirect

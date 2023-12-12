@@ -2,9 +2,13 @@ package appchannellogic
 
 import (
 	"context"
+	"errors"
 
 	"github.com/aheadIV/NightVoyager/appsvc/internal/svc"
+	"github.com/aheadIV/NightVoyager/appsvc/model"
 	"github.com/aheadIV/NightVoyager/appsvc/types/appsvc"
+	"github.com/go-rel/rel"
+	"github.com/go-rel/rel/where"
 
 	"github.com/zeromicro/go-zero/core/logx"
 )
@@ -24,7 +28,27 @@ func NewGetChannelByIdLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Ge
 }
 
 func (l *GetChannelByIdLogic) GetChannelById(in *appsvc.GetChannelByIdReq) (*appsvc.GetChannelByIdResp, error) {
-	// todo: add your logic here and delete this line
-
+	if in != nil && in.AppId > 0 {
+		var appChannel model.AppChannel
+		query := rel.Where(where.Eq("id", in.AppId))
+		if err := l.svcCtx.DB.Find(l.ctx, &appChannel, query); err != nil {
+			if !errors.Is(err, rel.ErrNotFound) {
+				return nil, err
+			}
+			return &appsvc.GetChannelByIdResp{}, nil
+		}
+		return &appsvc.GetChannelByIdResp{
+			Data: &appsvc.Channel{
+				Id:            appChannel.ID,
+				ChannelName:   appChannel.ChannelName,
+				ChannelKey:    appChannel.ChannelKey,
+				ChannelDomain: appChannel.ChannelDomain,
+				ChannelSecret: appChannel.ChannelSecret,
+				IsDefault:     int64(appChannel.IsDefault),
+				Quota:         int64(appChannel.Quota),
+				CreatedAt:     appChannel.CreatedAt.Unix(),
+			},
+		}, nil
+	}
 	return &appsvc.GetChannelByIdResp{}, nil
 }

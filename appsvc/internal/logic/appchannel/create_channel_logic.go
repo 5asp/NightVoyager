@@ -2,8 +2,10 @@ package appchannellogic
 
 import (
 	"context"
+	"time"
 
 	"github.com/aheadIV/NightVoyager/appsvc/internal/svc"
+	"github.com/aheadIV/NightVoyager/appsvc/model"
 	"github.com/aheadIV/NightVoyager/appsvc/types/appsvc"
 
 	"github.com/zeromicro/go-zero/core/logx"
@@ -24,7 +26,21 @@ func NewCreateChannelLogic(ctx context.Context, svcCtx *svc.ServiceContext) *Cre
 }
 
 func (l *CreateChannelLogic) CreateChannel(in *appsvc.CreateChannelReq) (*appsvc.CreateChannelResp, error) {
-	// todo: add your logic here and delete this line
+	if in != nil {
+		domain := &model.AppChannel{
+			ChannelName:   in.GetName(),
+			ChannelKey:    in.GetAppId(),
+			ChannelSecret: in.GetSecret(),
+			ChannelDomain: in.GetGateway(),
+			IsDefault:     int(in.GetIsDefault()),
+			CreatedAt:     time.Now(),
+		}
+		err := l.svcCtx.DB.Insert(l.ctx, domain)
+		if err != nil {
+			return nil, err
+		}
+		return &appsvc.CreateChannelResp{Id: domain.ID}, nil
+	}
 
 	return &appsvc.CreateChannelResp{}, nil
 }

@@ -2,6 +2,9 @@ package globalsms
 
 import (
 	"context"
+	"errors"
+	"fmt"
+	"strings"
 
 	"github.com/aheadIV/NightVoyager/send/internal/svc"
 	"github.com/aheadIV/NightVoyager/send/internal/types"
@@ -24,7 +27,27 @@ func NewSendLogic(ctx context.Context, svcCtx *svc.ServiceContext) *SendLogic {
 }
 
 func (l *SendLogic) Send(req *types.SendReq) (resp *types.SendResp, err error) {
-	// todo: add your logic here and delete this line
+	//1.调用appsvc获取到accountID
+	//2.调用tplsvc插入到sign
+	//3.调用tplsvc插入到tpl
+	//4.调用tplsvc插入到tpl_send,返回send_id 以及处理账户额度
+	//5.调用appsvc发送短信
+
+	openBracket := "【"
+	closeBracket := "】"
+
+	startIndex := strings.Index(req.Content, openBracket)
+	endIndex := strings.Index(req.Content, closeBracket)
+
+	if startIndex == -1 || endIndex == -1 {
+		// 未找到匹配的字符串
+		fmt.Println("未找到匹配的字符串")
+		notMatch := errors.New("非法签名")
+		return nil, notMatch
+	}
+
+	sig := req.Content[startIndex+len(openBracket) : endIndex]
+	tpl := strings.TrimSpace(req.Content[endIndex+len(closeBracket):])
 
 	return
 }
