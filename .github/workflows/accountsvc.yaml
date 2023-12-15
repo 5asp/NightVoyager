@@ -27,11 +27,13 @@ jobs:
         username: ${{ github.repository_owner }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
+    - name: Copy app.yaml to build context
+      run: cp ./accountsvc/etc/accountsvc.yaml ${{ github.workspace }}
+
     - name: Build and Push Docker image
       uses: docker/build-push-action@v5
       with:
         context: .
         file: ./accountsvc/Dockerfile
-        file: ./accountsvc/etc/accountsvc.yaml
         push: true
         tags: ghcr.io/${{ github.repository_owner }}/accountsvc:${{ github.sha }}
