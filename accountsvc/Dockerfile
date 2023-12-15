@@ -15,7 +15,7 @@ ADD go.sum .
 ADD go.sum .
 RUN go mod download
 COPY . .
-COPY etc /app/etc
+COPY ./etc /app/etc
 RUN go build -ldflags="-s -w" -o /app/accountsvc .
 
 
