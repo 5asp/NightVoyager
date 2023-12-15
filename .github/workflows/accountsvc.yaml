@@ -32,5 +32,6 @@ jobs:
       with:
         context: .
         file: ./accountsvc/Dockerfile
+        file: ./accountsvc/etc/accountsvc.yaml
         push: true
         tags: ghcr.io/${{ github.repository_owner }}/accountsvc:${{ github.sha }}
