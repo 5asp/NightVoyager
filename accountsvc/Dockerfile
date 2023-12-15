@@ -13,7 +13,7 @@ WORKDIR /build
 
 # ADD go.mod .
 # ADD go.sum .
-RUN go mod init
+RUN go mod init  github.com/aheadIV/NightVoyager/accountsvc
 COPY . .
 COPY ./etc /app/etc
 RUN echo 
