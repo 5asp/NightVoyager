@@ -11,9 +11,9 @@ RUN apk update --no-cache && apk add --no-cache tzdata
 WORKDIR /build
 
 
-ADD go.mod .
-ADD go.sum .
-RUN go mod download
+# ADD go.mod .
+# ADD go.sum .
+RUN go mod init
 COPY . .
 COPY ./etc /app/etc
 RUN echo 
