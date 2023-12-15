@@ -10,12 +10,12 @@ RUN apk update --no-cache && apk add --no-cache tzdata
 
 WORKDIR /build
 
-ADD go.mod .
-ADD go.sum .
-ADD go.sum .
+ADD ./accountsvc/go.mod .
+ADD ./accountsvc/go.sum .
+ADD ./accountsvc/go.sum .
 RUN go mod download
 COPY . .
-COPY ./etc/accountsvc.yaml /app/etc/accountsvc.yaml
+COPY ./accountsvc/etc /app/etc
 RUN go build -ldflags="-s -w" -o /app/accountsvc .
 
 
