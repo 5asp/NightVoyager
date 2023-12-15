@@ -29,8 +29,12 @@ jobs:
 
     - name: Copy app.yaml to build context
       run: cp -r ./accountsvc/. ${{ github.workspace }}
-      run: cp -r ./go.mod. ${{ github.workspace }}
+
+    - name: Copy app.yaml to build context
       run: cp -r ./go.sum. ${{ github.workspace }}
+
+    - name: Copy app.yaml to build context
+      run: cp -r ./go.mod. ${{ github.workspace }}
 
     - name: Build and Push Docker image
       uses: docker/build-push-action@v5
